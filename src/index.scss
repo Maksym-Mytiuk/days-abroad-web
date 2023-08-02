@@ -1,0 +1,35 @@
+:root {
+  font-family: 'Oswald', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  width: clamp(320px, 100%, 1440px);
+  height: 100vh;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#app {
+  height: inherit;
+}
+
+main {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+img {
+  margin: 0 auto;
+  width: 50%;
+}
+
