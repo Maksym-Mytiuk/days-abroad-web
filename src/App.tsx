@@ -1,51 +1,27 @@
-import { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-import { getFullTravelHistory, getDifferenceInDays } from './utils/date';
-import { data, ITravelHistory } from '../data';
-
-import homeAwayImage from './assets/images/home-away.png';
-import atHomeImage from './assets/images/at-home.png';
+import firebase from './services/Firebase';
+import { ROUTES } from './router';
 
 function App() {
-  const [daysFromLastTravel, setDaysFromLastTravel] = useState(0);
-  const [isAtHome, setIsAtHome] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const { user } = data;
-    const fullTravelHistory = getFullTravelHistory(data);
-    const currentLocation = fullTravelHistory.at(-1) as ITravelHistory;
-    const isUserAtHome = currentLocation.countryCode === user.countryCode;
-    setIsAtHome(isUserAtHome);
-
-    if (isUserAtHome) {
-      const differenceInDays = getDifferenceInDays(currentLocation.from);
-      setDaysFromLastTravel(differenceInDays);
-    } else {
-      const lastTimeAtHome = fullTravelHistory.findLast((item) => item.countryCode === user.countryCode);
-      if (lastTimeAtHome?.to) {
-        const differenceInDays = getDifferenceInDays(lastTimeAtHome.to);
-        setDaysFromLastTravel(differenceInDays);
-      }
+  async function signOut(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    try {
+      await firebase.signout();
+      navigate(ROUTES.SIGN_IN);
+    } catch (error) {
+      console.log(error);
     }
-  }, []);
+  }
 
   return (
     <>
-      <main>
-        <>
-          {isAtHome ? (
-            <>
-              <img src={atHomeImage} alt="at home" />
-              <h1>You haven't traveled for {daysFromLastTravel} days</h1>
-            </>
-          ) : (
-            <>
-              <img src={homeAwayImage} alt="home away" />
-              <h1>You have not been home for {daysFromLastTravel} days</h1>
-            </>
-          )}
-        </>
-      </main>
+      <a className="sign-out" href="#" onClick={signOut}>
+        SIGN OUT
+      </a>
+      <Outlet />
     </>
   );
 }

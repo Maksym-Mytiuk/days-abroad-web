@@ -1,0 +1,34 @@
+@import "modules/normalize", "modules/input";
+
+:root {
+    font-family: "Oswald", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1;
+    font-weight: 400;
+    box-sizing: border-box;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    background: #f6f5f7;
+}
+
+#app {
+    height: inherit;
+}
+
+.container {
+    max-width: 1440px;
+}

@@ -1,0 +1,12 @@
+.container {
+    height: 100%;
+    display: grid;
+    place-content: center;
+    text-align: center;
+}
+
+.sign-out {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
