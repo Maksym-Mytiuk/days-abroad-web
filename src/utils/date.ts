@@ -1,27 +1,26 @@
-import { IAbroad, ITravelHistory } from '../../data';
+import { IUser, ITravelHistory } from '../interfaces/user';
 
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
 export const HOUR = MINUTE * 60;
 export const DAY = HOUR * 24;
 
-export function getDifferenceInDays(startDate: Date, endDate = new Date()) {
-  const differenceInTime = endDate.getTime() - startDate.getTime();
+export function getDifferenceInDays(startDate: number, endDate = +new Date()) {
+  const differenceInTime = new Date(endDate).getTime() - new Date(startDate).getTime();
   return Math.floor(differenceInTime / DAY);
 }
 
-export function getFullTravelHistory({ travelHistory, user }: IAbroad): ITravelHistory[] {
-  const { birth, country, countryCode } = user;
+export function getFullTravelHistory({ travelHistory, born, country, countryCode }: IUser): ITravelHistory[] {
   const fullHistory = [];
 
   if (!travelHistory.length) {
-    fullHistory.push({ countryCode, country, from: birth, to: null });
+    fullHistory.push({ countryCode, country, from: born, to: null });
     return fullHistory;
   }
 
   const firstTravel = travelHistory[0];
   if (firstTravel.countryCode !== countryCode) {
-    fullHistory.push({ countryCode, country, from: birth, to: firstTravel.from });
+    fullHistory.push({ countryCode, country, from: born, to: firstTravel.from });
   }
 
   travelHistory.forEach((currentTravel, index) => {

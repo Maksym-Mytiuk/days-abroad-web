@@ -1,6 +1,11 @@
 import { ReactNode } from 'react';
 import './button.scss';
 
-export default function index({ children }: { children: ReactNode }) {
-  return <button>{children}</button>;
+interface IProps {
+  children: ReactNode;
+  className?: 'outline' | '';
+}
+
+export default function index({ children, className = '' }: IProps) {
+  return <button className={className}>{children}</button>;
 }

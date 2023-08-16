@@ -4,7 +4,7 @@ This application allows users to track their travel history, displaying how many
 
 ## Features
 
-- ~~User Registration via Google, GitHub, or Facebook.~~
+- User Registration via Google, GitHub.
 - A Main Screen displaying the number of days spent abroad or at home.
 - ~~Stay History Screen for viewing and editing a list of visited countries, sortable by date or duration.~~
 - ~~Stay Statistics Screen for visual representation of time spent in various countries.~~

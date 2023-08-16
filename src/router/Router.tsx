@@ -1,13 +1,16 @@
+import React from 'react';
 import { createBrowserRouter, redirect } from 'react-router-dom';
 
 import firebase from '../services/Firebase';
 
-import App from '../App';
-import HomePage from '../pages/HomePage';
-import SignIn from '../pages/SignIn';
+const App = React.lazy(() => import('../App'));
+const Home = React.lazy(() => import('../pages/Home'));
+const Account = React.lazy(() => import('../pages/Account'));
+const SignIn = React.lazy(() => import('../pages/SignIn'));
 
 export const ROUTES = {
   HOME: '/',
+  USER_ACCOUNT: '/account-settings',
   SIGN_IN: '/signin',
 } as const;
 
@@ -24,7 +27,16 @@ export const router = createBrowserRouter([
 
       return null;
     },
-    children: [{ element: <HomePage />, path: '' }],
+    children: [
+      {
+        element: <Home />,
+        path: '',
+      },
+      {
+        element: <Account />,
+        path: ROUTES.USER_ACCOUNT,
+      },
+    ],
   },
   {
     element: <SignIn />,

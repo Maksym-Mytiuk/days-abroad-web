@@ -1,21 +1,72 @@
 import { initializeApp } from 'firebase/app';
-import { Auth, getAuth, GoogleAuthProvider, signInWithPopup, GithubAuthProvider, signOut } from 'firebase/auth';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { Auth, GoogleAuthProvider, GithubAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
+
 import { firebaseConfig } from '../../env';
+import { IUser } from '../interfaces/user';
 
 export type Provider = GithubAuthProvider | GoogleAuthProvider;
 
+const DB_APP = initializeApp(firebaseConfig);
+const DB = getFirestore(DB_APP);
+const COLLECTION_USERS = 'users';
+
 class Firebase {
-  private auth!: Auth;
-  isUserAuth!: boolean;
+  private _auth!: Auth;
+  private _userId: string;
+  private _isUserAuth!: boolean;
 
   constructor() {
-    this.isUserAuth = false;
+    this._auth = {} as Auth;
+    this._userId = '';
+    this._isUserAuth = false;
   }
 
   async init() {
-    initializeApp(firebaseConfig);
     this.auth = getAuth();
-    this.isUserAuth = await this.checkIsUserAuth();
+    this.userId = await this.setUserId();
+    this.isUserAuth = !!this.auth.currentUser;
+  }
+
+  get auth() {
+    return this._auth;
+  }
+  private set auth(auth: Auth) {
+    this._auth = auth;
+  }
+
+  get isUserAuth() {
+    return this._isUserAuth;
+  }
+  private set isUserAuth(state: boolean) {
+    this._isUserAuth = state;
+  }
+
+  get userId() {
+    return this._userId;
+  }
+  private set userId(uid: string) {
+    this._userId = uid;
+  }
+
+  async addUserInfo(user: Omit<IUser, 'travelHistory'>) {
+    try {
+      const ref = doc(DB, COLLECTION_USERS, this.userId);
+      await setDoc(ref, user, { merge: true });
+    } catch (error) {
+      this.logError(error);
+    }
+  }
+
+  async getUserInfo(): Promise<IUser | undefined> {
+    try {
+      const ref = doc(DB, COLLECTION_USERS, this.userId);
+      const userData = await getDoc(ref);
+
+      return userData.data() as IUser;
+    } catch (error) {
+      this.logError(error);
+    }
   }
 
   async signin(provider: Provider) {
@@ -24,8 +75,7 @@ class Firebase {
       this.isUserAuth = true;
       return userCred;
     } catch (error) {
-      console.error(error);
-      throw new Error(error as string);
+      this.logError(error);
     }
   }
 
@@ -34,25 +84,26 @@ class Firebase {
       await signOut(this.auth);
       this.isUserAuth = false;
     } catch (error) {
-      console.log(error);
-      throw new Error(error as string);
+      this.logError(error);
     }
   }
 
-  private async checkIsUserAuth(): Promise<boolean> {
+  private async setUserId(): Promise<string> {
     return new Promise((res) => {
       this.auth.onAuthStateChanged((user) => {
         if (user) {
-          user.getIdToken().then(function (idToken) {
-            console.log(idToken);
-            res(true);
-          });
+          res(user.uid);
         } else {
           console.log('No user is signed in');
-          res(false);
+          res('');
         }
       });
     });
+  }
+
+  private logError(error: unknown) {
+    console.log(error);
+    throw new Error(error as string);
   }
 }
 
