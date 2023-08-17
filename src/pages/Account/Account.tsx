@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import firebase from '../../services/Firebase';
 
 import Input from '../../components/Form/Input';
@@ -23,10 +26,11 @@ export default function Account() {
         const userData = await firebase.getUserInfo();
         if (!ignore && userData) {
           setUserData(userData);
-          setIsLoaded(true);
         }
       } catch (err) {
         console.error(err as string);
+      } finally {
+        setIsLoaded(true);
       }
     }
 
@@ -52,6 +56,7 @@ export default function Account() {
 
     try {
       await firebase.addUserInfo(user);
+      notify();
     } catch (error) {
       console.error(error as string);
     }
@@ -79,27 +84,44 @@ export default function Account() {
     setUserData({ ...userData, countryCode, country });
   }
 
+  function notify() {
+    toast.success('Saved!');
+  }
+
   const { name, secondName, born, countryCode } = userData;
   return (
-    <div className="container">
+    <>
       <h1>Profile</h1>
       {isLoaded ? (
-        <form onSubmit={onSubmit}>
-          <Input name="name" onChange={onChangeName} value={name} />
-          <Input name="secondname" onChange={onChangeSecondame} value={secondName} />
-          <Input type="date" name="born" onChange={onChangeDate} value={born} />
-          <Select
-            name="country"
-            defaultValue="Choose country"
-            options={countries}
-            onChange={onChangeCountry}
-            value={countryCode}
+        <>
+          <form onSubmit={onSubmit}>
+            <Input name="name" onChange={onChangeName} value={name} />
+            <Input name="secondname" onChange={onChangeSecondame} value={secondName} />
+            <Input type="date" name="born" onChange={onChangeDate} value={born} />
+            <Select
+              name="country"
+              defaultValue="Choose country"
+              options={countries}
+              onChange={onChangeCountry}
+              value={countryCode}
+            />
+            <Button className="outline">Save</Button>
+          </form>
+          <ToastContainer
+            position="bottom-right"
+            theme="light"
+            autoClose={3000}
+            newestOnTop={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            closeOnClick
           />
-          <Button className="outline">Save</Button>
-        </form>
+        </>
       ) : (
         'Loading...'
       )}
-    </div>
+    </>
   );
 }

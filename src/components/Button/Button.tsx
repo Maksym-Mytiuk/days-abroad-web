@@ -7,5 +7,5 @@ interface IProps {
 }
 
 export default function index({ children, className = '' }: IProps) {
-  return <button className={className}>{children}</button>;
+  return <button className={className + ' btn'}>{children}</button>;
 }

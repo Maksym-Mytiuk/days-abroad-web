@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   return (
-    <div className="container">
+    <div>
       {isAtHome ? (
         <>
           <img src={atHomeImage} alt="at home" />
@@ -40,7 +40,7 @@ function App() {
         </>
       ) : (
         <>
-          <img src={homeAwayImage} alt="home away" />
+          <img width={512} height={512} src={homeAwayImage} alt="home away" />
           <h1>You have not been home for {daysFromLastTravel} days</h1>
         </>
       )}

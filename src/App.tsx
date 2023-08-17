@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+
+import Navigation from './components/Navigation';
 
 import firebase from './services/Firebase';
 import { ROUTES } from './router';
@@ -26,23 +28,13 @@ function App() {
     getUserInfo();
   }, []);
 
-  async function signOut(e: React.MouseEvent<HTMLAnchorElement>) {
-    e.preventDefault();
-    try {
-      await firebase.signout();
-      navigate(ROUTES.SIGN_IN);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
-    <>
-      <a className="sign-out" href="#" onClick={signOut}>
-        SIGN OUT
-      </a>
-      <Outlet />
-    </>
+    <Suspense fallback={<p>Loading application...</p>}>
+      <main className="container">
+        <Navigation />
+        <Outlet />
+      </main>
+    </Suspense>
   );
 }
 
