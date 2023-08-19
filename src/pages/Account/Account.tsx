@@ -7,6 +7,7 @@ import firebase from '../../services/Firebase';
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/Button';
+import Loader from '../../components/Loader';
 
 import { countries } from '../../utils/countries';
 import { IUser } from '../../interfaces/user';
@@ -44,18 +45,8 @@ export default function Account() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const { name, secondName, born, country, countryCode } = userData;
-
-    const user = {
-      name: name,
-      secondName: secondName,
-      born: born,
-      country: country,
-      countryCode: countryCode,
-    } as User;
-
     try {
-      await firebase.addUserInfo(user);
+      await firebase.addUserInfo(userData);
       notify();
     } catch (error) {
       console.error(error as string);
@@ -94,7 +85,7 @@ export default function Account() {
       <h1>Profile</h1>
       {isLoaded ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="account-form">
             <Input name="name" onChange={onChangeName} value={name} />
             <Input name="secondname" onChange={onChangeSecondame} value={secondName} />
             <Input type="date" name="born" onChange={onChangeDate} value={born} />
@@ -120,7 +111,7 @@ export default function Account() {
           />
         </>
       ) : (
-        'Loading...'
+        <Loader />
       )}
     </>
   );

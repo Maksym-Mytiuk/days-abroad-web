@@ -8,8 +8,8 @@ export interface IUser {
 }
 
 export interface ITravelHistory {
+  id: string;
   countryCode: string;
-  country: string;
-  from: number;
-  to: number | null;
+  from: string;
+  to: string | null;
 }

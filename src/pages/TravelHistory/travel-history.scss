@@ -1,0 +1,20 @@
+.travel-form {
+  max-width: 768px;
+  width: 100%;
+}
+
+.travel-wrapper {
+  display: flex;
+  gap: 25px;
+
+  > * {
+    flex: 1;
+  }
+
+  &:last-child {
+    select,
+    input {
+      margin-bottom: 0;
+    }
+  }
+}

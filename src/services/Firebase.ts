@@ -3,7 +3,7 @@ import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { Auth, GoogleAuthProvider, GithubAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
 
 import { firebaseConfig } from '../../env';
-import { IUser } from '../interfaces/user';
+import { ITravelHistory, IUser } from '../interfaces/user';
 
 export type Provider = GithubAuthProvider | GoogleAuthProvider;
 
@@ -53,6 +53,17 @@ class Firebase {
     try {
       const ref = doc(DB, COLLECTION_USERS, this.userId);
       await setDoc(ref, user, { merge: true });
+    } catch (error) {
+      this.logError(error);
+    }
+  }
+
+  async addTravelHistory(travels: ITravelHistory[]) {
+    console.log(travels);
+
+    try {
+      const ref = doc(DB, COLLECTION_USERS, this.userId);
+      await setDoc(ref, { travelHistory: travels }, { merge: true });
     } catch (error) {
       this.logError(error);
     }

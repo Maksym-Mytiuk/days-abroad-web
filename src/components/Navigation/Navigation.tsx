@@ -8,6 +8,7 @@ import './navigation.scss';
 const NAVIGATION_MENU = [
   { to: ROUTES.HOME, title: 'Home' },
   { to: ROUTES.USER_ACCOUNT, title: 'User Account' },
+  { to: ROUTES.TRAVEL_HISTORY, title: 'My trips' },
 ];
 
 export default function Navigation() {
@@ -33,7 +34,7 @@ export default function Navigation() {
         ))}
         <li>
           <a href="#" onClick={signOut}>
-            Sign Out
+            Log Out
           </a>
         </li>
       </ul>

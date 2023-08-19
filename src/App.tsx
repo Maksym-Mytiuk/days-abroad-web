@@ -2,6 +2,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import Navigation from './components/Navigation';
+import Loader from './components/Loader';
 
 import firebase from './services/Firebase';
 import { ROUTES } from './router';
@@ -29,7 +30,7 @@ function App() {
   }, []);
 
   return (
-    <Suspense fallback={<p>Loading application...</p>}>
+    <Suspense fallback={<Loader />}>
       <main className="container">
         <Navigation />
         <Outlet />

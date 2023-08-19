@@ -6,11 +6,13 @@ import firebase from '../services/Firebase';
 const App = React.lazy(() => import('../App'));
 const Home = React.lazy(() => import('../pages/Home'));
 const Account = React.lazy(() => import('../pages/Account'));
+const TravelHistory = React.lazy(() => import('../pages/TravelHistory'));
 const SignIn = React.lazy(() => import('../pages/SignIn'));
 
 export const ROUTES = {
   HOME: '/',
   USER_ACCOUNT: '/account-settings',
+  TRAVEL_HISTORY: '/history',
   SIGN_IN: '/signin',
 } as const;
 
@@ -35,6 +37,10 @@ export const router = createBrowserRouter([
       {
         element: <Account />,
         path: ROUTES.USER_ACCOUNT,
+      },
+      {
+        element: <TravelHistory />,
+        path: ROUTES.TRAVEL_HISTORY,
       },
     ],
   },

@@ -2,17 +2,18 @@ import { useId } from 'react';
 
 interface IProps {
   name: string;
-  value: string;
+  value?: string;
   defaultValue: string;
   options: { key: string; value: string }[];
   onChange: (e: React.FormEvent<HTMLSelectElement>) => void;
+  className?: string;
 }
 
-export default function Select({ name, defaultValue, options, onChange, value }: IProps) {
+export default function Select({ name, defaultValue, options, onChange, value, className }: IProps) {
   const id = useId();
 
   return (
-    <div className="input-wrapper">
+    <div className={'input-wrapper ' + className}>
       <select onChange={onChange} value={value}>
         <option value="">{defaultValue}</option>
         {options.map((item, index) => {
