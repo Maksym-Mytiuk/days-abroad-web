@@ -4,10 +4,10 @@ export interface IUser {
   country: string;
   countryCode: string;
   born: string;
-  travelHistory: ITravelHistory[];
+  travelHistory: ITrip[];
 }
 
-export interface ITravelHistory {
+export interface ITrip {
   id: string;
   countryCode: string;
   from: string;

@@ -12,12 +12,9 @@ export default function SignUp() {
   async function signin(provider: Provider) {
     try {
       await firebase.signin(provider);
-      // const userInfo = await firebase.getUserInfo();
-      // console.log(userInfo);
-
       navigateToHomePage();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

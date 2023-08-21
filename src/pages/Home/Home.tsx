@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { getFullTravelHistory, getDifferenceInDays } from '../../utils/date';
 import { data } from '../../../data';
-import { ITravelHistory } from '../../interfaces/user';
+import { ITrip } from '../../interfaces/user';
 
 import './home-page.scss';
 import homeAwayImage from '../../assets/images/home-away.png';
@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const { countryCode } = data;
     const fullTravelHistory = getFullTravelHistory(data);
-    const currentLocation = fullTravelHistory.at(-1) as ITravelHistory;
+    const currentLocation = fullTravelHistory.at(-1) as ITrip;
     const isUserAtHome = currentLocation.countryCode === countryCode;
     setIsAtHome(isUserAtHome);
 

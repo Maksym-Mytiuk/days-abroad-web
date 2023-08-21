@@ -20,7 +20,7 @@ export default function Navigation() {
       await firebase.signout();
       navigate(ROUTES.SIGN_IN);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

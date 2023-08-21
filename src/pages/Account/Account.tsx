@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 import firebase from '../../services/Firebase';
 
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
+import Toast, { notify } from '../../components/Toast';
 
 import { countries } from '../../utils/countries';
 import { IUser } from '../../interfaces/user';
@@ -47,36 +45,19 @@ export default function Account() {
 
     try {
       await firebase.addUserInfo(userData);
-      notify();
+      showToast();
     } catch (error) {
       console.error(error as string);
     }
   }
 
-  function onChangeName(e: React.FormEvent<HTMLInputElement>) {
-    const name = (e.target as HTMLInputElement).value;
-    setUserData({ ...userData, name });
+  function onChangeFormProp(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) {
+    const { value, name } = e.target as HTMLInputElement | HTMLSelectElement;
+    setUserData({ ...userData, [name]: value });
   }
 
-  function onChangeSecondame(e: React.FormEvent<HTMLInputElement>) {
-    const secondName = (e.target as HTMLInputElement).value;
-    setUserData({ ...userData, secondName });
-  }
-
-  function onChangeDate(e: React.FormEvent<HTMLInputElement>) {
-    const born = (e.target as HTMLInputElement).value;
-    setUserData({ ...userData, born });
-  }
-
-  function onChangeCountry(e: React.FormEvent<HTMLSelectElement>) {
-    const countryCode = (e.target as HTMLSelectElement).value;
-    const country = countries.find((country) => country.key === countryCode)?.value || '';
-
-    setUserData({ ...userData, countryCode, country });
-  }
-
-  function notify() {
-    toast.success('Saved!');
+  function showToast() {
+    notify.success('Saved!');
   }
 
   const { name, secondName, born, countryCode } = userData;
@@ -86,29 +67,20 @@ export default function Account() {
       {isLoaded ? (
         <>
           <form onSubmit={onSubmit} className="account-form">
-            <Input name="name" onChange={onChangeName} value={name} />
-            <Input name="secondname" onChange={onChangeSecondame} value={secondName} />
-            <Input type="date" name="born" onChange={onChangeDate} value={born} />
+            <Input name="name" onChange={onChangeFormProp} value={name} />
+            <Input name="secondName" onChange={onChangeFormProp} value={secondName} />
+            <Input type="date" name="born" onChange={onChangeFormProp} value={born} />
             <Select
-              name="country"
+              name="countryCode"
+              label="Country"
               defaultValue="Choose country"
               options={countries}
-              onChange={onChangeCountry}
+              onChange={onChangeFormProp}
               value={countryCode}
             />
             <Button className="outline">Save</Button>
           </form>
-          <ToastContainer
-            position="bottom-right"
-            theme="light"
-            autoClose={3000}
-            newestOnTop={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable={false}
-            pauseOnHover={false}
-            closeOnClick
-          />
+          <Toast />
         </>
       ) : (
         <Loader />

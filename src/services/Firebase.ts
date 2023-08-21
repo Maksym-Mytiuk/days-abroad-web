@@ -3,7 +3,7 @@ import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { Auth, GoogleAuthProvider, GithubAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
 
 import { firebaseConfig } from '../../env';
-import { ITravelHistory, IUser } from '../interfaces/user';
+import { ITrip, IUser } from '../interfaces/user';
 
 export type Provider = GithubAuthProvider | GoogleAuthProvider;
 
@@ -58,9 +58,7 @@ class Firebase {
     }
   }
 
-  async addTravelHistory(travels: ITravelHistory[]) {
-    console.log(travels);
-
+  async addTravelHistory(travels: ITrip[]) {
     try {
       const ref = doc(DB, COLLECTION_USERS, this.userId);
       await setDoc(ref, { travelHistory: travels }, { merge: true });
@@ -105,7 +103,7 @@ class Firebase {
         if (user) {
           res(user.uid);
         } else {
-          console.log('No user is signed in');
+          console.error('No user is signed in');
           res('');
         }
       });
@@ -113,7 +111,7 @@ class Firebase {
   }
 
   private logError(error: unknown) {
-    console.log(error);
+    console.error(error);
     throw new Error(error as string);
   }
 }

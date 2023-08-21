@@ -1,4 +1,4 @@
-import { IUser, ITravelHistory } from '../interfaces/user';
+import { IUser, ITrip } from '../interfaces/user';
 
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
@@ -10,7 +10,7 @@ export function getDifferenceInDays(startDate: number, endDate = +new Date()) {
   return Math.floor(differenceInTime / DAY);
 }
 
-export function getFullTravelHistory({ travelHistory, born, country, countryCode }: IUser): ITravelHistory[] {
+export function getFullTravelHistory({ travelHistory, born, country, countryCode }: IUser): ITrip[] {
   const fullHistory = [];
 
   if (!travelHistory.length) {

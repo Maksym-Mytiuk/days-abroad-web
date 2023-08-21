@@ -7,14 +7,15 @@ interface IProps {
   options: { key: string; value: string }[];
   onChange: (e: React.FormEvent<HTMLSelectElement>) => void;
   className?: string;
+  label?: string;
 }
 
-export default function Select({ name, defaultValue, options, onChange, value, className }: IProps) {
+export default function Select({ name, value, defaultValue, label = name, className, options, onChange }: IProps) {
   const id = useId();
 
   return (
     <div className={'input-wrapper ' + className}>
-      <select onChange={onChange} value={value}>
+      <select onChange={onChange} value={value} name={name}>
         <option value="">{defaultValue}</option>
         {options.map((item, index) => {
           return (
@@ -24,7 +25,7 @@ export default function Select({ name, defaultValue, options, onChange, value, c
           );
         })}
       </select>
-      <label htmlFor={id}>{name}</label>
+      <label htmlFor={id}>{label}</label>
     </div>
   );
 }
