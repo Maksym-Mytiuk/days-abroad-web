@@ -74,9 +74,9 @@ export default function TravelHistory() {
     <>
       <h1>Add your trips</h1>
 
-      <form className="travel-form" onSubmit={(e) => e.preventDefault()}>
-        {isLoaded ? (
-          travels.map((travel) => (
+      {isLoaded ? (
+        <form className="travel-form" onSubmit={(e) => e.preventDefault()}>
+          {travels.map((travel) => (
             <div key={travel.id} className="travel-wrapper">
               <Select
                 className="country-select"
@@ -103,14 +103,14 @@ export default function TravelHistory() {
                 onChange={(e) => onChangeTravelProp(e, travel.id)}
               />
             </div>
-          ))
-        ) : (
-          <Loader />
-        )}
+          ))}
 
-        <Button onClick={addMoreTravel}>+ Add more</Button>
-        <Button onClick={save}>Save</Button>
-      </form>
+          <Button onClick={addMoreTravel}>+ Add more</Button>
+          <Button onClick={save}>Save</Button>
+        </form>
+      ) : (
+        <Loader />
+      )}
 
       <Toast />
     </>
