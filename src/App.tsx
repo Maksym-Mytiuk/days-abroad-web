@@ -1,12 +1,12 @@
 import { useEffect, useState, Suspense } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import Navigation from './components/Navigation';
-import Loader from './components/Loader';
-
 import firebase from './services/Firebase';
 import { ROUTES } from './router';
 import { IUser } from './interfaces/user';
+
+import Navigation from './components/Navigation';
+import Loader from './components/Loader';
 
 function App() {
   const navigate = useNavigate();

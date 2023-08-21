@@ -64,15 +64,10 @@ export default function TravelHistory() {
   async function save() {
     try {
       await firebase.addTravelHistory(travels);
-      showToast();
+      notify.success('Saved!');
     } catch (error) {
       console.error(error as string);
     }
-  }
-
-  function showToast() {
-    // CREATE TOAST COMPONENT AND REPLACE IN ACCOUNT
-    notify.success('Saved!');
   }
 
   return (
