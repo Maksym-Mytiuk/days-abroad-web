@@ -1,7 +1,6 @@
 export interface IUser {
   name: string;
   secondName: string;
-  country: string;
   countryCode: string;
   born: string;
   travelHistory: ITrip[];
@@ -13,3 +12,11 @@ export interface ITrip {
   from: string;
   to: string | null;
 }
+
+export const DEFAULT_USER: IUser = {
+  name: '',
+  secondName: '',
+  countryCode: '',
+  born: '',
+  travelHistory: [],
+};

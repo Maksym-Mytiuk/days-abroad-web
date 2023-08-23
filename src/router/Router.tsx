@@ -1,7 +1,10 @@
+// TODO RECHECK NEW USER FLOW
+
 import React from 'react';
 import { createBrowserRouter, redirect } from 'react-router-dom';
 
 import firebase from '../services/Firebase';
+import { DEFAULT_USER } from '../interfaces/user';
 
 const App = React.lazy(() => import('../App'));
 const Home = React.lazy(() => import('../pages/Home'));
@@ -21,13 +24,24 @@ export const router = createBrowserRouter([
   {
     element: <App />,
     path: ROUTES.HOME,
-    loader: () => {
+    loader: async () => {
       const isUserAuth = firebase.isUserAuth;
       if (!isUserAuth) {
         return redirect(ROUTES.SIGN_IN);
       }
 
-      return null;
+      try {
+        const user = await firebase.getUserInfo();
+        if (user) {
+          return user;
+        } else {
+          redirect(ROUTES.USER_ACCOUNT);
+          return DEFAULT_USER;
+        }
+      } catch (error) {
+        console.error(error);
+        return redirect(ROUTES.SIGN_IN);
+      }
     },
     children: [
       {

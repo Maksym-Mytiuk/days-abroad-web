@@ -1,41 +1,29 @@
-import { useEffect, useState, Suspense } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, Suspense, useState } from 'react';
+import { Outlet, useLoaderData } from 'react-router-dom';
 
-import firebase from './services/Firebase';
-import { ROUTES } from './router';
 import { IUser } from './interfaces/user';
+
+import useUser, { IAction, USER_ACTION } from './hooks/useUser';
 
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
 
 function App() {
-  const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({} as IUser);
+  const [user, dispatch] = useUser() as [user: IUser, dispatch: React.Dispatch<IAction>];
+
+  const userData = useLoaderData();
 
   useEffect(() => {
-    async function getUserInfo() {
-      try {
-        const userInfo = await firebase.getUserInfo();
-        if (userInfo) {
-          setUserInfo(userInfo);
-        } else {
-          navigate(ROUTES.USER_ACCOUNT);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    getUserInfo();
+    dispatch({ type: USER_ACTION.SET_USER, payload: userData });
   }, []);
 
   return (
-    <Suspense fallback={<Loader />}>
-      <main className="container">
-        <Navigation />
-        <Outlet />
-      </main>
-    </Suspense>
+    <main className="container">
+      <Navigation />
+      <Suspense fallback={<Loader />}>
+        <Outlet context={[user, dispatch]} />
+      </Suspense>
+    </main>
   );
 }
 

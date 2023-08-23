@@ -9,6 +9,7 @@ import homeAwayImage from '../../assets/images/home-away.png';
 import atHomeImage from '../../assets/images/at-home.png';
 
 function App() {
+  // MOVE ALL LOGIC TO UTILS
   const [daysFromLastTravel, setDaysFromLastTravel] = useState(0);
   const [isAtHome, setIsAtHome] = useState(false);
 
