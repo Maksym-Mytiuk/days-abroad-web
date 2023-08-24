@@ -18,6 +18,7 @@ import './account.scss';
 type User = Omit<IUser, 'travelHistory'>;
 
 export default function Account() {
+  // TODO FINISH IT!!!!!!
   const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -45,6 +46,7 @@ export default function Account() {
     <>
       <h1>Profile</h1>
       <form onSubmit={onSubmit} className="account-form">
+        {/* TODO ADD FORM VALIDATION */}
         <Input name="name" onChange={onChangeFormProp} value={name} />
         <Input name="secondName" onChange={onChangeFormProp} value={secondName} />
         <Input type="date" name="born" onChange={onChangeFormProp} value={born} />

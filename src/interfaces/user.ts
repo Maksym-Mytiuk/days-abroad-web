@@ -1,3 +1,5 @@
+// TODO ADD USER EMAIL
+
 export interface IUser {
   name: string;
   secondName: string;
@@ -18,5 +20,5 @@ export const DEFAULT_USER: IUser = {
   secondName: '',
   countryCode: '',
   born: '',
-  travelHistory: [],
+  travelHistory: [{ id: '', countryCode: '', from: '', to: '' }],
 };
