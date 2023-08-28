@@ -1,9 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
-import { Auth, GoogleAuthProvider, GithubAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
+import { Auth, GoogleAuthProvider, GithubAuthProvider, getAuth, signInWithPopup, signOut, User } from 'firebase/auth';
 
 import { firebaseConfig } from '../../env';
-import { ITrip, IUser } from '../interfaces/user';
+import { DEFAULT_USER, ITrip, IUser } from '../interfaces/user';
 
 export type Provider = GithubAuthProvider | GoogleAuthProvider;
 
@@ -12,27 +12,20 @@ const DB = getFirestore(DB_APP);
 const COLLECTION_USERS = 'users';
 
 class Firebase {
-  private _auth!: Auth;
-  private _userId: string;
+  private auth!: Auth;
+  private _user: User;
   private _isUserAuth!: boolean;
 
   constructor() {
-    this._auth = {} as Auth;
-    this._userId = '';
+    this.auth = {} as Auth;
+    this._user = {} as User;
     this._isUserAuth = false;
   }
 
   async init() {
     this.auth = getAuth();
-    this.userId = await this.setUserId();
+    this.user = await this.setUser();
     this.isUserAuth = !!this.auth.currentUser;
-  }
-
-  get auth() {
-    return this._auth;
-  }
-  private set auth(auth: Auth) {
-    this._auth = auth;
   }
 
   get isUserAuth() {
@@ -42,26 +35,35 @@ class Firebase {
     this._isUserAuth = state;
   }
 
-  get userId() {
-    return this._userId;
+  get user() {
+    return this._user;
   }
-  private set userId(uid: string) {
-    this._userId = uid;
+  private set user(user: User) {
+    this._user = user;
   }
 
   async addUserInfo(user: Omit<IUser, 'travelHistory'>) {
     try {
-      const ref = doc(DB, COLLECTION_USERS, this.userId);
+      const ref = doc(DB, COLLECTION_USERS, this.user.uid);
       await setDoc(ref, user, { merge: true });
     } catch (error) {
       this.logError(error);
     }
   }
 
-  async addTravelHistory(travels: ITrip[]) {
+  async addTravelHistory(travelHistory: ITrip[]) {
     try {
-      const ref = doc(DB, COLLECTION_USERS, this.userId);
-      await setDoc(ref, { travelHistory: travels }, { merge: true });
+      const ref = doc(DB, COLLECTION_USERS, this.user.uid);
+      await setDoc(ref, { travelHistory }, { merge: true });
+    } catch (error) {
+      this.logError(error);
+    }
+  }
+
+  async deleteTrip(trips: ITrip[]) {
+    try {
+      const ref = doc(DB, COLLECTION_USERS, this.user.uid);
+      await setDoc(ref, { travelHistory: trips }, { merge: true });
     } catch (error) {
       this.logError(error);
     }
@@ -69,10 +71,21 @@ class Firebase {
 
   async getUserInfo(): Promise<IUser | undefined> {
     try {
-      const ref = doc(DB, COLLECTION_USERS, this.userId);
-      const userData = await getDoc(ref);
+      if (!this.user.uid) {
+        await this.init();
+      }
 
-      return userData.data() as IUser;
+      const ref = doc(DB, COLLECTION_USERS, this.user.uid);
+      const userDoc = await getDoc(ref);
+      const userData = userDoc.data() as IUser;
+
+      if (!userData) {
+        const user = { ...DEFAULT_USER, email: this.user.email } as IUser;
+        await setDoc(ref, user, { merge: true });
+        return user;
+      }
+
+      return userData;
     } catch (error) {
       this.logError(error);
     }
@@ -97,14 +110,14 @@ class Firebase {
     }
   }
 
-  private async setUserId(): Promise<string> {
+  private async setUser(): Promise<User> {
     return new Promise((res) => {
       this.auth.onAuthStateChanged((user) => {
         if (user) {
-          res(user.uid);
+          res(user);
         } else {
           console.error('No user is signed in');
-          res('');
+          res({} as User);
         }
       });
     });

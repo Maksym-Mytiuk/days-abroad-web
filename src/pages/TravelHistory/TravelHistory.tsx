@@ -1,27 +1,28 @@
-import { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import firebase from '../../services/Firebase';
 
+import { IAction, USER_ACTION } from '../../hooks/useUser';
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/Button';
 import Toast, { notify } from '../../components/Toast';
 
-import { ITrip, IUser } from '../../interfaces/user';
+import { IUser } from '../../interfaces/user';
 import { countries } from '../../utils/countries';
 
 import './travel-history.scss';
+import BinIcon from '../../components/Icons/BinIcon';
+import { useEffect } from 'react';
 
 export default function TravelHistory() {
-  const [user] = useOutletContext() as Array<IUser>;
-  const travels = user.travelHistory.slice();
+  const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
+  const trips = user.travelHistory.slice();
 
   useEffect(() => {
     let ignore = false;
-
-    if (!travels.length) {
-      addMoreTravel();
+    if (!trips.length && !ignore) {
+      addMoreTrip();
     }
 
     return () => {
@@ -29,30 +30,48 @@ export default function TravelHistory() {
     };
   }, []);
 
-  function onChangeTravelProp(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>, id: string) {
+  function handleTripInput(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>, id: string) {
     const { value, name } = e.target as HTMLInputElement;
 
-    const updatedTravels = travels.map((item) => {
+    const updatedTrips = trips.map((item) => {
       if (item.id === id) {
         return { ...item, [name]: value };
       }
       return item;
     });
 
-    // setTravels(updatedTravels);
+    dispatch({ type: USER_ACTION.UPDATE_TRIPS, payload: updatedTrips });
   }
 
-  function addMoreTravel() {
-    // setTravels([...travels, { id: Date.now().toString(), countryCode: '', from: '', to: '' }]);
+  function addMoreTrip() {
+    dispatch({ type: USER_ACTION.ADD_TRIP });
   }
 
   async function save() {
+    const isFormValid = valiadateFrom();
+    if (isFormValid) {
+      try {
+        await firebase.addTravelHistory(trips);
+        notify.success('Saved!');
+      } catch (error) {
+        console.error(error as string);
+      }
+    }
+  }
+
+  async function deleteTrip(id: string) {
+    const travelHistory = trips.filter((trip) => trip.id !== id);
     try {
-      await firebase.addTravelHistory(travels);
-      notify.success('Saved!');
+      dispatch({ type: USER_ACTION.DELETE_TRIP, payload: travelHistory });
+      await firebase.deleteTrip(travelHistory);
+      notify.success('Deleted!');
     } catch (error) {
       console.error(error as string);
     }
+  }
+
+  function valiadateFrom() {
+    return trips.every(({ countryCode, from, to }) => countryCode.length && from.length && to?.length);
   }
 
   return (
@@ -60,7 +79,7 @@ export default function TravelHistory() {
       <h1>Add your trips</h1>
 
       <form className="travel-form" onSubmit={(e) => e.preventDefault()}>
-        {travels.map((travel) => (
+        {trips.map((travel) => (
           <div key={travel.id} className="travel-wrapper">
             <Select
               className="country-select"
@@ -69,7 +88,7 @@ export default function TravelHistory() {
               defaultValue="Choose country"
               value={travel.countryCode}
               options={countries}
-              onChange={(e) => onChangeTravelProp(e, travel.id)}
+              onChange={(e) => handleTripInput(e, travel.id)}
             />
 
             <Input
@@ -77,19 +96,20 @@ export default function TravelHistory() {
               type="date"
               name="from"
               value={travel.from}
-              onChange={(e) => onChangeTravelProp(e, travel.id)}
+              onChange={(e) => handleTripInput(e, travel.id)}
             />
             <Input
               className="data-input"
               type="date"
               name="to"
               value={travel.to ?? undefined}
-              onChange={(e) => onChangeTravelProp(e, travel.id)}
+              onChange={(e) => handleTripInput(e, travel.id)}
             />
+            <BinIcon onClick={() => deleteTrip(travel.id)} />
           </div>
         ))}
 
-        <Button onClick={addMoreTravel}>+ Add more</Button>
+        <Button onClick={addMoreTrip}>+ Add more</Button>
         <Button onClick={save}>Save</Button>
       </form>
 

@@ -6,16 +6,28 @@
 
 .travel-wrapper {
   display: flex;
+  align-items: center;
   gap: 25px;
+  margin-bottom: 40px;
 
   > * {
     flex: 1;
   }
 
-  &:last-child {
-    select,
-    input {
-      margin-bottom: 0;
+  select,
+  input {
+    margin-bottom: 0;
+  }
+
+  svg {
+    flex: 0 24px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    fill: #cb72aa;
+    transition: fill 0.2s;
+    &:hover {
+      fill: #000;
     }
   }
 }

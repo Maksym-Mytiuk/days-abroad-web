@@ -9,15 +9,36 @@ interface IProps {
   name: string;
   label?: string;
   className?: string;
+  required?: boolean;
+  disabled?: boolean;
   onChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
-export default function TextInput({ type = 'text', name, label = name, value = '', className, onChange }: IProps) {
+export default function TextInput(props: IProps) {
   const id = useId();
+  const {
+    type = 'text',
+    name,
+    label = name,
+    value = '',
+    className,
+    required = true,
+    disabled = false,
+    onChange,
+  } = props;
 
   return (
     <div className={'input-wrapper ' + className}>
-      <input id={id} type={type} placeholder={label} name={name} value={value} onChange={onChange} />
+      <input
+        required={required}
+        id={id}
+        type={type}
+        placeholder={label}
+        name={name}
+        value={value}
+        disabled={disabled}
+        onChange={onChange}
+      />
       <label htmlFor={id}>{label}</label>
     </div>
   );

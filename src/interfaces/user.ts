@@ -1,6 +1,5 @@
-// TODO ADD USER EMAIL
-
 export interface IUser {
+  email: string;
   name: string;
   secondName: string;
   countryCode: string;
@@ -9,16 +8,21 @@ export interface IUser {
 }
 
 export interface ITrip {
-  id: string;
+  id: `${string}-${string}-${string}-${string}-${string}`;
   countryCode: string;
   from: string;
   to: string | null;
 }
 
 export const DEFAULT_USER: IUser = {
+  email: '',
   name: '',
   secondName: '',
   countryCode: '',
   born: '',
-  travelHistory: [{ id: '', countryCode: '', from: '', to: '' }],
+  travelHistory: [{ ...getTrip() }],
 };
+
+export function getTrip() {
+  return { id: crypto.randomUUID(), countryCode: '', from: '', to: '' };
+}

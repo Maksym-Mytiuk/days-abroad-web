@@ -20,7 +20,6 @@ export const ROUTES = {
 
 await firebase.init();
 
-// TODO RECHECK NEW USER FLOW
 export const router = createBrowserRouter([
   {
     element: <App />,
@@ -33,12 +32,7 @@ export const router = createBrowserRouter([
 
       try {
         const user = await firebase.getUserInfo();
-        if (user) {
-          return user;
-        } else {
-          redirect(ROUTES.USER_ACCOUNT);
-          return DEFAULT_USER;
-        }
+        return user;
       } catch (error) {
         console.error(error);
         return redirect(ROUTES.SIGN_IN);

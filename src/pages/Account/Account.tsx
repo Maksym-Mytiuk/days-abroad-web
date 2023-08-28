@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 
 import firebase from '../../services/Firebase';
 
-import { IAction } from '../../hooks/useUser';
+import { IAction, USER_ACTION } from '../../hooks/useUser';
 
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
@@ -15,10 +15,7 @@ import { IUser } from '../../interfaces/user';
 
 import './account.scss';
 
-type User = Omit<IUser, 'travelHistory'>;
-
 export default function Account() {
-  // TODO FINISH IT!!!!!!
   const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -34,19 +31,19 @@ export default function Account() {
 
   function onChangeFormProp(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) {
     const { value, name } = e.target as HTMLInputElement | HTMLSelectElement;
-    // setUserData({ ...userData, [name]: value });
+    dispatch({ type: USER_ACTION.UPDATE_USER, payload: { [name]: value } });
   }
 
   function showToast() {
     notify.success('Saved!');
   }
 
-  const { name, secondName, born, countryCode } = user;
+  const { email, name, secondName, born, countryCode } = user;
   return (
     <>
       <h1>Profile</h1>
       <form onSubmit={onSubmit} className="account-form">
-        {/* TODO ADD FORM VALIDATION */}
+        <Input name="email" onChange={onChangeFormProp} value={email} disabled />
         <Input name="name" onChange={onChangeFormProp} value={name} />
         <Input name="secondName" onChange={onChangeFormProp} value={secondName} />
         <Input type="date" name="born" onChange={onChangeFormProp} value={born} />
