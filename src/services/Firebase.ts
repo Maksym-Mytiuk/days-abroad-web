@@ -1,3 +1,4 @@
+// TODO decompose it
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { Auth, GoogleAuthProvider, GithubAuthProvider, getAuth, signInWithPopup, signOut, User } from 'firebase/auth';

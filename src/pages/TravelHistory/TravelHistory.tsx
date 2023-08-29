@@ -1,19 +1,18 @@
+import { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import firebase from '../../services/Firebase';
+import { IUser } from '../../interfaces/user';
+import { countries } from '../../utils/countries';
 
 import { IAction, USER_ACTION } from '../../hooks/useUser';
 import Input from '../../components/Form/Input';
 import Select from '../../components/Form/Select';
 import Button from '../../components/Button';
 import Toast, { notify } from '../../components/Toast';
-
-import { IUser } from '../../interfaces/user';
-import { countries } from '../../utils/countries';
+import BinIcon from '../../components/Icons/BinIcon';
 
 import './travel-history.scss';
-import BinIcon from '../../components/Icons/BinIcon';
-import { useEffect } from 'react';
 
 export default function TravelHistory() {
   const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
@@ -71,7 +70,8 @@ export default function TravelHistory() {
   }
 
   function valiadateFrom() {
-    return trips.every(({ countryCode, from, to }) => countryCode.length && from.length && to?.length);
+    // TODO CHECK to props only not for a last input
+    return trips.every(({ countryCode, from }) => countryCode.length && from.length);
   }
 
   return (
@@ -102,6 +102,7 @@ export default function TravelHistory() {
               className="data-input"
               type="date"
               name="to"
+              required={false}
               value={travel.to ?? undefined}
               onChange={(e) => handleTripInput(e, travel.id)}
             />

@@ -2,7 +2,6 @@ import React from 'react';
 import { createBrowserRouter, redirect } from 'react-router-dom';
 
 import firebase from '../services/Firebase';
-import { DEFAULT_USER } from '../interfaces/user';
 
 const App = React.lazy(() => import('../App'));
 const Home = React.lazy(() => import('../pages/Home'));

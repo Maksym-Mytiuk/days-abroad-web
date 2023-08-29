@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { IAction } from '../../hooks/useUser';
 
 import { getFullTravelHistory, getDifferenceInDays } from '../../utils/date';
-import { data } from '../../../data';
-import { ITrip } from '../../interfaces/user';
+import { ITrip, IUser } from '../../interfaces/user';
 
-import './home-page.scss';
 import homeAwayImage from '../../assets/images/home-away.png';
 import atHomeImage from '../../assets/images/at-home.png';
+import './home-page.scss';
 
 function App() {
-  // MOVE ALL LOGIC TO UTILS
+  const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
+
+  // TODO MOVE ALL LOGIC TO UTILS
   const [daysFromLastTravel, setDaysFromLastTravel] = useState(0);
   const [isAtHome, setIsAtHome] = useState(false);
 
   useEffect(() => {
-    const { countryCode } = data;
-    const fullTravelHistory = getFullTravelHistory(data);
+    const { countryCode } = user;
+
+    const fullTravelHistory = getFullTravelHistory(user);
+    console.log(fullTravelHistory);
+
     const currentLocation = fullTravelHistory.at(-1) as ITrip;
     const isUserAtHome = currentLocation.countryCode === countryCode;
     setIsAtHome(isUserAtHome);
