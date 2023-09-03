@@ -1,0 +1,29 @@
+.social-media {
+    margin-top: 24px;
+}
+
+.media-item {
+    display: flex;
+    margin: 0 auto 24px;
+    padding: 8px 16px;
+    gap: 16px;
+    border: 1px solid #c2c8d0;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in;
+
+    &:hover {
+        background-color: #e5e5e5;
+    }
+    &:focus {
+        background-color: #c8d3da;
+    }
+
+    svg {
+        width: 24px;
+    }
+
+    span {
+        font-size: 22px;
+    }
+}

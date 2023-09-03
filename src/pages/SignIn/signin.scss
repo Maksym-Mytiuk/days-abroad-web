@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    height: 100%;
+    padding: 24px;
+}
+
+.form-container {
+    display: flex;
+    place-content: space-between;
+    width: min(768px, 100%);
+    height: min(480px, 100%);
+    margin: auto;
+
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow:
+        0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+
+    overflow: hidden;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 24px;
+    text-align: center;
+}
+
+.signin-wrapper {
+    background: #ff416c;
+    background: linear-gradient(to right, #ff4b2b, #ff416c);
+}
+
+a {
+    margin-top: auto;
+}

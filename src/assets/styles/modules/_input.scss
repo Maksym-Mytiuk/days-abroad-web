@@ -1,0 +1,48 @@
+.input-wrapper {
+  position: relative;
+}
+
+label {
+  position: absolute;
+  top: 7px;
+  left: 0px;
+  font-size: 18px;
+  text-transform: capitalize;
+  opacity: 0.5;
+  transition:
+    inset 0.2s ease,
+    font-size 0.2s ease;
+}
+
+input,
+select {
+  height: 40px;
+  width: 100%;
+  margin-bottom: 50px;
+  padding: 5px 5px 8px 0px;
+  font-size: 18px;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  outline: none;
+  background-color: transparent;
+
+  &:focus,
+  &:not(&:placeholder-shown) {
+    + label {
+      top: -20px;
+      font-size: 12px;
+    }
+  }
+
+  &:focus {
+    border-color: #cb72aa;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &::placeholder {
+    color: transparent;
+  }
+}
