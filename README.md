@@ -2,13 +2,19 @@
 
 This application allows users to track their travel history, displaying how many days they've spent abroad or at home. Users can add, view and edit details of their trips.
 
+## Screenshots
+
+![plot](./screenshot1.jpg)
+![plot](./screenshot2.jpg)
+![plot](./screenshot3.jpg)
+
 ## Features
 
 - User Registration via Google, GitHub.
 - A Main Screen displaying the number of days spent abroad or at home.
-- ~~Stay History Screen for viewing and editing a list of visited countries, sortable by date or duration.~~
+- History Screen for viewing and editing a list of visited countries, sortable by date or duration.
+- Add New Country & Date Screen for recording new trips.
 - ~~Stay Statistics Screen for visual representation of time spent in various countries.~~
-- ~~Add New Country & Date Screen for recording new trips.~~
 
 ## Getting Started
 

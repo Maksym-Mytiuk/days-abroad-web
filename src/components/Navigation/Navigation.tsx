@@ -1,13 +1,13 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../router';
 
-import firebase from '../../services/Firebase';
+import userDB from '../../services/db/User';
 
 import './navigation.scss';
 
 const NAVIGATION_MENU = [
   { to: ROUTES.HOME, title: 'Home' },
-  { to: ROUTES.USER_ACCOUNT, title: 'User Account' },
+  { to: ROUTES.USER_ACCOUNT, title: 'Account' },
   { to: ROUTES.TRAVEL_HISTORY, title: 'My trips' },
 ];
 
@@ -17,7 +17,7 @@ export default function Navigation() {
   async function signOut(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
     try {
-      await firebase.signout();
+      await userDB.signout();
       navigate(ROUTES.SIGN_IN);
     } catch (error) {
       console.error(error);

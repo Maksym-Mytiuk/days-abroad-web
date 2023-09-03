@@ -10,7 +10,7 @@ import atHomeImage from '../../assets/images/at-home.png';
 import './home-page.scss';
 
 function App() {
-  const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
+  const [user] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
 
   // TODO MOVE ALL LOGIC TO UTILS
   const [daysFromLastTravel, setDaysFromLastTravel] = useState(0);
@@ -18,9 +18,7 @@ function App() {
 
   useEffect(() => {
     const { countryCode } = user;
-
     const fullTravelHistory = getFullTravelHistory(user);
-    console.log(fullTravelHistory);
 
     const currentLocation = fullTravelHistory.at(-1) as ITrip;
     const isUserAtHome = currentLocation.countryCode === countryCode;

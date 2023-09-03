@@ -1,7 +1,7 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import firebase from '../../services/Firebase';
+import userDB from '../../services/db/User';
 
 import { IAction, USER_ACTION } from '../../hooks/useUser';
 
@@ -18,15 +18,11 @@ import './account.scss';
 export default function Account() {
   const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    try {
-      await firebase.addUserInfo(user);
-      showToast();
-    } catch (error) {
-      console.error(error as string);
-    }
+    userDB.save(user);
+    showToast();
   }
 
   function onChangeFormProp(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) {

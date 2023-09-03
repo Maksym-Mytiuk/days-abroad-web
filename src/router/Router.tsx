@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, redirect } from 'react-router-dom';
-
-import firebase from '../services/Firebase';
+import user from '../services/db/User';
+await user.init();
 
 const App = React.lazy(() => import('../App'));
 const Home = React.lazy(() => import('../pages/Home'));
@@ -17,21 +17,18 @@ export const ROUTES = {
   SIGN_IN: '/signin',
 } as const;
 
-await firebase.init();
-
 export const router = createBrowserRouter([
   {
     element: <App />,
     path: ROUTES.HOME,
     loader: async () => {
-      const isUserAuth = firebase.isUserAuth;
+      const isUserAuth = user.isUserAuth;
       if (!isUserAuth) {
         return redirect(ROUTES.SIGN_IN);
       }
 
       try {
-        const user = await firebase.getUserInfo();
-        return user;
+        return await user.getUser();
       } catch (error) {
         console.error(error);
         return redirect(ROUTES.SIGN_IN);
@@ -56,7 +53,7 @@ export const router = createBrowserRouter([
     element: <SignIn />,
     path: ROUTES.SIGN_IN,
     loader: () => {
-      const isUserAuth = firebase.isUserAuth;
+      const isUserAuth = user.isUserAuth;
       if (isUserAuth) {
         return redirect(ROUTES.HOME);
       }

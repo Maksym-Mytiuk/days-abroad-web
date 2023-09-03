@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import firebase from '../../services/Firebase';
+import userDB from '../../services/db/User';
 import { IUser } from '../../interfaces/user';
 import { countries } from '../../utils/countries';
 
@@ -46,27 +46,19 @@ export default function TravelHistory() {
     dispatch({ type: USER_ACTION.ADD_TRIP });
   }
 
-  async function save() {
+  function save() {
     const isFormValid = valiadateFrom();
     if (isFormValid) {
-      try {
-        await firebase.addTravelHistory(trips);
-        notify.success('Saved!');
-      } catch (error) {
-        console.error(error as string);
-      }
+      userDB.save({ travelHistory: trips });
+      notify.success('Saved!');
     }
   }
 
-  async function deleteTrip(id: string) {
+  function deleteTrip(id: string) {
     const travelHistory = trips.filter((trip) => trip.id !== id);
-    try {
-      dispatch({ type: USER_ACTION.DELETE_TRIP, payload: travelHistory });
-      await firebase.deleteTrip(travelHistory);
-      notify.success('Deleted!');
-    } catch (error) {
-      console.error(error as string);
-    }
+    userDB.save({ travelHistory });
+    dispatch({ type: USER_ACTION.DELETE_TRIP, payload: travelHistory });
+    notify.success('Deleted!');
   }
 
   function valiadateFrom() {
