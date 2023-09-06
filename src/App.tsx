@@ -17,11 +17,9 @@ export default function App() {
   );
 }
 
-export function Content() {
+function Content() {
   const userData = useLoaderData() as IUser;
   const [user, dispatch] = useUser() as [user: IUser, dispatch: React.Dispatch<IAction>];
-  // TODO Make this map in db class
-  userData.travelHistory.sort((current, next) => +new Date(current.from) - +new Date(next.from));
 
   useEffect(() => {
     dispatch({ type: USER_ACTION.SET_USER, payload: userData });
