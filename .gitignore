@@ -3,6 +3,9 @@ node_modules/
 dist/
 npm-debug.log
 yarn-error.log
+coverage/
+.env
+fakeData.ts
 
 # Editor directories and files
 .idea
@@ -10,4 +13,4 @@ yarn-error.log
 *.ntvs*
 *.njsproj
 *.sln
-env.ts
+
