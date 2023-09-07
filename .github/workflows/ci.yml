@@ -24,7 +24,7 @@ jobs:
       - name: echo
         run: |
           if [[ -z "${{ secrets.VITE_FIREBASE_API_KEY }}" ]]; then
-            echo "MY_SECRET is not set!"
+            echo "MY_SECRET is not set!!"
           else
             echo "MY_SECRET is set! ${{ secrets.VITE_FIREBASE_API_KEY }}"
           fi
