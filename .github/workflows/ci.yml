@@ -29,6 +29,22 @@ jobs:
             echo "MY_SECRET is set! ${{ secrets.VITE_FIREBASE_API_KEY }}"
           fi
 
+      - name: echo 2
+        run: |
+          if [[ -z "${{ vars.VITE_FIREBASE_API_KEY }}" ]]; then
+            echo "MY_SECRET is not set!"
+          else
+            echo "MY_SECRET is set! ${{ vars.VITE_FIREBASE_API_KEY }}"
+          fi
+
+      - name: echo 3
+        run: |
+          if [[ -z "${{ env.VITE_FIREBASE_API_KEY }}" ]]; then
+            echo "MY_SECRET is not set!"
+          else
+            echo "MY_SECRET is set! ${{ env.VITE_FIREBASE_API_KEY }}"
+          fi
+
       - name: Run tests
         run: npm test
         env:
