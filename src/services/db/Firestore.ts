@@ -8,7 +8,7 @@ import {
   DocumentData,
   PartialWithFieldValue,
 } from 'firebase/firestore';
-import { firebaseConfig } from '../../../env';
+import { firebaseConfig } from '../../utils/firebaseConfig';
 
 const FIREBASE_APP = initializeApp(firebaseConfig);
 
