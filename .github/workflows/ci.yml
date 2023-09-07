@@ -22,11 +22,11 @@ jobs:
         run: npm ci
 
       - name: echo
-        run: echo "Secret length ${{ secrets.VITE_FIREBASE_API_KEY }}"
+        run: echo "Secret length ${{ env.VITE_FIREBASE_API_KEY }}"
 
       - name: echo 2
         run: |
-          if [[ -z "${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" ]]; then
+          if [[ -z "${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}" ]]; then
             echo "MY_SECRET is not set!"
           else
             echo "MY_SECRET is set!"
