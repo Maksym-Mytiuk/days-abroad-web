@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import userDB from '../../services/db/User';
-import { ITrip, IUser } from '../../interfaces/user';
+import { IUser } from '../../interfaces/user';
 import { countries } from '../../utils/countries';
 
 import { IAction, USER_ACTION } from '../../hooks/useUser';
@@ -47,10 +47,10 @@ export default function TravelHistory() {
   }
 
   function save() {
-    const isFormValid = valiadateFrom();
+    const isFormValid = validateFrom();
     if (isFormValid) {
-      sortTravelHistory();
-      userDB.save({ travelHistory: trips });
+      const sortedTrips = sortTrips();
+      userDB.save({ travelHistory: sortedTrips });
       notify.success('Saved!');
     }
   }
@@ -62,11 +62,11 @@ export default function TravelHistory() {
     notify.success('Deleted!');
   }
 
-  function sortTravelHistory() {
-    trips.sort((current, next) => +new Date(current.from) - +new Date(next.from));
+  function sortTrips() {
+    return trips.sort((current, next) => Date.parse(current.from) - Date.parse(next.from));
   }
 
-  function valiadateFrom() {
+  function validateFrom() {
     return trips.every(({ countryCode, from }) => countryCode.length && from.length);
   }
 
