@@ -10,7 +10,7 @@ import Loader from './components/Loader';
 
 export default function App() {
   return (
-    <div id="app" className="container">
+    <div className="container">
       <Navigation />
       <Content />
     </div>
