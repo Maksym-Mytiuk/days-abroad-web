@@ -26,13 +26,13 @@ export default class User {
     return this.currentLocation.countryCode === this.user.countryCode;
   }
 
+  get daysFromLastTravel() {
+    const lastTimeAtHome = this.trips.findLast((item) => item.countryCode === this.user.countryCode);
+    return lastTimeAtHome?.to ? getDifferenceInDays(lastTimeAtHome.to) : 0;
+  }
+
   get daysFromLastTrip() {
-    if (this.isAtHome) {
-      return getDifferenceInDays(this.currentLocation.from);
-    } else {
-      const lastTimeAtHome = this.trips.reverse().find((item) => item.countryCode === this.user.countryCode);
-      return lastTimeAtHome?.to ? getDifferenceInDays(lastTimeAtHome.to) : 0;
-    }
+    return getDifferenceInDays(this.currentLocation.from);
   }
 
   private constructFullTravelHistory(trips: ITrip[]) {
