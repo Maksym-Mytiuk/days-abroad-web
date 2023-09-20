@@ -9,7 +9,7 @@ interface IProps {
 
 export default function index({ children, className = '', onClick }: IProps) {
   return (
-    <button className={className + ' btn'} onClick={onClick}>
+    <button className={`btn ${className}`} onClick={onClick}>
       {children}
     </button>
   );

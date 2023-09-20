@@ -11,9 +11,12 @@
     &:hover {
       fill: #737373;
     }
-    &#ru {
-      position: relative;
-      fill: #ab2d2d;
+    &.home {
+      fill: #0e881e !important;
+    }
+    &.ru {
+      fill: #ab2d2d !important;
+      pointer-events: none;
     }
   }
   text {
