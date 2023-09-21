@@ -7,6 +7,7 @@ This application allows users to track their travel history, displaying how many
 ![plot](./screenshot1.jpg)
 ![plot](./screenshot2.jpg)
 ![plot](./screenshot3.jpg)
+![plot](./screenshot4.jpg)
 
 ## Features
 
