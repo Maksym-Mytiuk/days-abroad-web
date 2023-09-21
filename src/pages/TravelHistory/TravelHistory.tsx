@@ -74,37 +74,39 @@ export default function TravelHistory() {
     <>
       <h1>Add your trips</h1>
 
-      <form className="travel-form" onSubmit={(e) => e.preventDefault()}>
-        {trips.map((travel) => (
-          <div key={travel.id} className="travel-wrapper">
-            <Select
-              className="country-select"
-              name="countryCode"
-              label="Country"
-              defaultValue="Choose country"
-              value={travel.countryCode}
-              options={countries}
-              onChange={(e) => handleTripInput(e, travel.id)}
-            />
+      <form onSubmit={(e) => e.preventDefault()}>
+        <ul className="form-wrapper travel-list">
+          {trips.map((travel) => (
+            <li key={travel.id} className="travel-list-item">
+              <Select
+                className="country-select"
+                name="countryCode"
+                label="Country"
+                defaultValue="Choose country"
+                value={travel.countryCode}
+                options={countries}
+                onChange={(e) => handleTripInput(e, travel.id)}
+              />
 
-            <Input
-              className="data-input"
-              type="date"
-              name="from"
-              value={travel.from}
-              onChange={(e) => handleTripInput(e, travel.id)}
-            />
-            <Input
-              className="data-input"
-              type="date"
-              name="to"
-              required={false}
-              value={travel.to ?? undefined}
-              onChange={(e) => handleTripInput(e, travel.id)}
-            />
-            <BinIcon onClick={() => deleteTrip(travel.id)} />
-          </div>
-        ))}
+              <Input
+                className="data-input"
+                type="date"
+                name="from"
+                value={travel.from}
+                onChange={(e) => handleTripInput(e, travel.id)}
+              />
+              <Input
+                className="data-input"
+                type="date"
+                name="to"
+                required={false}
+                value={travel.to ?? undefined}
+                onChange={(e) => handleTripInput(e, travel.id)}
+              />
+              <BinIcon onClick={() => deleteTrip(travel.id)} />
+            </li>
+          ))}
+        </ul>
 
         <Button onClick={addMoreTrip}>+ Add more</Button>
         <Button onClick={save}>Save</Button>

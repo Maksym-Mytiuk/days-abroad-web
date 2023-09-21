@@ -7,6 +7,7 @@ This application allows users to track their travel history, displaying how many
 ![plot](./screenshot1.jpg)
 ![plot](./screenshot2.jpg)
 ![plot](./screenshot3.jpg)
+![plot](./screenshot4.jpg)
 
 ## Features
 
@@ -14,7 +15,7 @@ This application allows users to track their travel history, displaying how many
 - A Main Screen displaying the number of days spent abroad or at home.
 - History Screen for viewing and editing a list of visited countries, sortable by date or duration.
 - Add New Country & Date Screen for recording new trips.
-- ~~Stay Statistics Screen for visual representation of time spent in various countries.~~
+- Stay Statistics Screen for visual representation of time spent in various countries.
 
 ## Getting Started
 

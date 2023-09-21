@@ -9,6 +9,7 @@ const NAVIGATION_MENU = [
   { to: ROUTES.HOME, title: 'Home' },
   { to: ROUTES.USER_ACCOUNT, title: 'Account' },
   { to: ROUTES.TRAVEL_HISTORY, title: 'My trips' },
+  { to: ROUTES.STATISTIC, title: 'My statistic' },
 ];
 
 export default function Navigation() {

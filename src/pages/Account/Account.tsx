@@ -38,7 +38,7 @@ export default function Account() {
   return (
     <>
       <h1>Profile</h1>
-      <form onSubmit={onSubmit} className="account-form">
+      <form onSubmit={onSubmit} className="form-wrapper account-form">
         <Input name="email" onChange={onChangeFormProp} value={email} disabled />
         <Input name="name" onChange={onChangeFormProp} value={name} />
         <Input name="secondName" onChange={onChangeFormProp} value={secondName} />
