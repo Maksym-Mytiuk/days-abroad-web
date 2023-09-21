@@ -11,25 +11,22 @@ import './world.scss';
 export default function World() {
   const [user] = useOutletContext() as [user: IUser];
 
-  const daysInEveryCountry = user.travelHistory.reduce((acc, country) => {
+  const visitedCountriesDays = user.travelHistory.reduce((acc, country) => {
     const days = getDifferenceInDays(country.from, country.to || new Date().toString());
     acc[country.countryCode] = acc[country.countryCode] ? acc[country.countryCode] + days : days;
     return acc;
   }, {} as Record<string, number>);
 
-  const maxDaysInSingleCountry = Object.values(daysInEveryCountry).reduce((acc, value) => {
-    acc = Math.max(acc, value);
-    return acc;
-  }, 0);
+  const maxDaysInSingleCountry = Math.max(...Object.values(visitedCountriesDays));
 
   function getOpacity(countryCode: string) {
-    if (!daysInEveryCountry[countryCode]) {
+    if (!visitedCountriesDays[countryCode]) {
       return false;
     }
 
     const minOpacity = 0.5;
-    const halfPossibleOpacity = daysInEveryCountry[countryCode] / maxDaysInSingleCountry / 2;
-    const finalOpacity = +(halfPossibleOpacity + minOpacity).toFixed(2);
+    const maxSafeOpacity = visitedCountriesDays[countryCode] / maxDaysInSingleCountry / 2;
+    const finalOpacity = +(maxSafeOpacity + minOpacity).toFixed(2);
     return `rgba(203, 114, 170, ${finalOpacity})`;
   }
 
