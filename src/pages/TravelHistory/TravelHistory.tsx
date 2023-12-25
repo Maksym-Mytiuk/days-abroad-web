@@ -30,11 +30,12 @@ export default function TravelHistory() {
   }, []);
 
   function handleTripInput(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>, id: string) {
-    const { value, name } = e.target as HTMLInputElement;
+    const target = e.target as HTMLInputElement;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
 
     const updatedTrips = trips.map((item) => {
       if (item.id === id) {
-        return { ...item, [name]: value };
+        return { ...item, [target.name]: value };
       }
       return item;
     });
@@ -103,6 +104,16 @@ export default function TravelHistory() {
                 value={travel.to ?? undefined}
                 onChange={(e) => handleTripInput(e, travel.id)}
               />
+              <Input
+                label="short trip"
+                className="short-trip"
+                type="checkbox"
+                name="isShortTrip"
+                required={false}
+                checked={travel.isShortTrip}
+                onChange={(e) => handleTripInput(e, travel.id)}
+              />
+
               <BinIcon onClick={() => deleteTrip(travel.id)} />
             </li>
           ))}

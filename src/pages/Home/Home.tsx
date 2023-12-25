@@ -41,7 +41,7 @@ function App() {
           <h1>You have not been home for {daysFromLastTravel} days</h1>
           {daysFromLastTrip !== daysFromLastTravel && (
             <h2>
-              Currently you are in {currentCountry} for {daysFromLastTrip} days{' '}
+              Currently you are in {currentCountry} for {daysFromLastTrip} days
             </h2>
           )}
         </>

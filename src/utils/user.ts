@@ -35,41 +35,50 @@ export default class User {
     return getDifferenceInDays(this.currentLocation.from);
   }
 
-  private constructFullTravelHistory(trips: ITrip[]) {
+  private constructFullTravelHistory(trips: ITrip[]): ITrip[] {
     if (!trips.length) {
-      return [this.createTrip({ countryCode: this.user.countryCode, from: this.user.born, to: null })];
+      return [this.createBaseTrip(this.user.born, null)];
     }
 
-    const travelHistory = [] as ITrip[];
-    const firstTrip = trips[0];
-    const lastTrip = trips[trips.length - 1];
+    trips = trips.filter((trip) => !trip.isShortTrip);
+    const travelHistory: ITrip[] = [];
 
-    if (firstTrip.countryCode !== this.user.countryCode) {
-      const trip = this.createTrip({ countryCode: this.user.countryCode, from: this.user.born, to: firstTrip.from });
-      travelHistory.push(trip);
-    }
-
-    trips.forEach((trip, index) => {
-      travelHistory.push(trip);
-      const atHome = this.getTimeBetweenTrips(trip, trips[index + 1]);
-      atHome && travelHistory.push(atHome);
-    });
-
-    if (lastTrip.to && lastTrip.countryCode !== this.user.countryCode) {
-      const trip = this.createTrip({ countryCode: this.user.countryCode, from: lastTrip.to, to: null });
-      travelHistory.push(trip);
-    }
+    this.addInitialHomeTripIfNeeded(trips, travelHistory);
+    this.addTripsWithHomeIntervals(trips, travelHistory);
+    this.addFinalHomeTripIfNeeded(trips, travelHistory);
 
     return travelHistory;
   }
 
-  private getTimeBetweenTrips(currentTrip: ITrip, nextTrip: ITrip): ITrip | undefined {
-    if (currentTrip.to && nextTrip && getDifferenceInDays(currentTrip.to, nextTrip.from) > 1) {
-      return this.createTrip({ countryCode: this.user.countryCode, from: currentTrip.to, to: nextTrip.from });
+  private addInitialHomeTripIfNeeded(trips: ITrip[], travelHistory: ITrip[]): void {
+    const firstTrip = trips[0];
+    if (firstTrip.countryCode !== this.user.countryCode) {
+      travelHistory.push(this.createBaseTrip(this.user.born, firstTrip.from));
     }
   }
 
-  private createTrip({ countryCode, from, to }: Omit<ITrip, 'id'>): ITrip {
-    return { id: crypto.randomUUID(), countryCode, from, to };
+  private addTripsWithHomeIntervals(trips: ITrip[], travelHistory: ITrip[]): void {
+    trips.forEach((trip, index) => {
+      travelHistory.push(trip);
+      const atHomeTrip = this.getTimeBetweenTrips(trip, trips[index + 1]);
+      if (atHomeTrip) travelHistory.push(atHomeTrip);
+    });
+  }
+
+  private addFinalHomeTripIfNeeded(trips: ITrip[], travelHistory: ITrip[]): void {
+    const lastTrip = trips[trips.length - 1];
+    if (lastTrip.to && lastTrip.countryCode !== this.user.countryCode) {
+      travelHistory.push(this.createBaseTrip(lastTrip.to, null));
+    }
+  }
+
+  private getTimeBetweenTrips(currentTrip: ITrip, nextTrip?: ITrip): ITrip | undefined {
+    if (currentTrip.to && nextTrip && getDifferenceInDays(currentTrip.to, nextTrip.from) > 1) {
+      return this.createBaseTrip(currentTrip.to, nextTrip.from);
+    }
+  }
+
+  private createBaseTrip(from: string, to: string | null): ITrip {
+    return { id: crypto.randomUUID(), countryCode: this.user.countryCode, from, to, isShortTrip: false };
   }
 }
