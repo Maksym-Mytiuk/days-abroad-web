@@ -31,6 +31,7 @@ function reducer(user: IUser, action: IAction) {
     case USER_ACTION.DELETE_TRIP:
       return { ...user, travelHistory: [...action.payload] };
     default:
-      throw Error('Unknown action: ' + action.type);
+      const _: never = action.type;
+      return _;
   }
 }

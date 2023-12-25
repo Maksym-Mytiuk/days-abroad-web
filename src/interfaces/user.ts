@@ -12,6 +12,7 @@ export interface ITrip {
   countryCode: string;
   from: string;
   to: string | null;
+  isShortTrip: boolean;
 }
 
 export const DEFAULT_USER: IUser = {
@@ -24,5 +25,5 @@ export const DEFAULT_USER: IUser = {
 };
 
 export function getTrip() {
-  return { id: crypto.randomUUID(), countryCode: '', from: '', to: '' };
+  return { id: crypto.randomUUID(), countryCode: '', from: '', to: '', isShortTrip: false };
 }
