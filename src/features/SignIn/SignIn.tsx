@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import user from '@/common/services/db/User';
-import { ROUTES } from '@/router';
+import { ROUTES } from '@/app/router';
 
 import SocialMedia from '@/common/components/SocialMedia';
 import './signin.scss';

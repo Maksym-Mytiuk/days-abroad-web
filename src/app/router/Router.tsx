@@ -1,15 +1,16 @@
 import React from 'react';
 import { createBrowserRouter, redirect } from 'react-router-dom';
-import user from '../common/services/db/User';
+
+import user from '@/common/services/db/User';
 await user.init();
 
-const App = React.lazy(() => import('../App'));
-const Home = React.lazy(() => import('../features/Home'));
-const Account = React.lazy(() => import('../features/Account'));
-const TravelHistory = React.lazy(() => import('../features/TravelHistory'));
-const Statistic = React.lazy(() => import('../features/Statistic'));
-const SignIn = React.lazy(() => import('../features/SignIn'));
-const NotFound = React.lazy(() => import('../features/NotFound'));
+const App = React.lazy(() => import('@/app/App'));
+const Home = React.lazy(() => import('@/features/Home'));
+const Account = React.lazy(() => import('@/features/Account'));
+const TravelHistory = React.lazy(() => import('@/features/TravelHistory'));
+const Statistic = React.lazy(() => import('@/features/Statistic'));
+const SignIn = React.lazy(() => import('@/features/SignIn'));
+const NotFound = React.lazy(() => import('@/features/NotFound'));
 
 export const ROUTES = {
   HOME: '/',

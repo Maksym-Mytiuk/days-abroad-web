@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/router';
+import { ROUTES } from '@/app/router';
 
 import userDB from '@/common/services/db/User';
 
