@@ -3,8 +3,8 @@ import { Tooltip } from 'react-tooltip';
 
 import { data } from './data';
 
-import { IUser } from '../../interfaces/user';
-import { getDifferenceInDays } from '../../utils/date';
+import { IUser } from '@/common/interfaces/user';
+import { getDifferenceInDays } from '@/common/utils/date';
 
 import './world.scss';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ROUTES } from '../../router/Router';
+import { ROUTES } from '@/router/Router';
 
 import './not-found.scss';
 import { NavLink } from 'react-router-dom';

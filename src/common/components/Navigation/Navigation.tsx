@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../router';
+import { ROUTES } from '@/router';
 
-import userDB from '../../services/db/User';
+import userDB from '@/common/services/db/User';
 
 import './navigation.scss';
 

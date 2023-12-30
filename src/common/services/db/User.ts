@@ -2,8 +2,8 @@ import { AuthProvider, User } from 'firebase/auth';
 import firestore from './Firestore';
 import authentication, { IAuth } from './Auth';
 
-import { IUser, DEFAULT_USER } from '../../interfaces/user';
-import logger from '../../utils/logger';
+import { IUser, DEFAULT_USER } from '@/common/interfaces/user';
+import logger from '@/common/utils/logger';
 
 const USERS_COLLECTION = 'users';
 

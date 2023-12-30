@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { IAction } from '../../hooks/useUser';
+import { IAction } from '@/common/hooks/useUser';
 
-import { IUser } from '../../interfaces/user';
-import User from '../../utils/user';
-import { countries } from '../../utils/countries';
+import { IUser } from '@/common/interfaces/user';
+import User from '@/common/utils/user';
+import { countries } from '@/common/utils/countries';
 
-import homeAwayImage from '../../assets/images/home-away.png';
-import atHomeImage from '../../assets/images/at-home.png';
+import homeAwayImage from '@/common/assets/images/home-away.png';
+import atHomeImage from '@/common/assets/images/at-home.png';
 import './home-page.scss';
 
 function App() {

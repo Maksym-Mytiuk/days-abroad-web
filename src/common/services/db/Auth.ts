@@ -1,5 +1,5 @@
 import { Auth, getAuth, signInWithPopup, signOut, AuthProvider } from 'firebase/auth';
-import logger from '../../utils/logger';
+import logger from '@/common/utils/logger';
 
 export interface IAuth {
   signin(provider: AuthProvider): Promise<void>;

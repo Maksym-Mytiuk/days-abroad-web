@@ -1,12 +1,12 @@
 import React, { useEffect, Suspense } from 'react';
 import { Outlet, useLoaderData } from 'react-router-dom';
 
-import { IUser } from './interfaces/user';
+import { IUser } from '@/common/interfaces/user';
 
-import useUser, { IAction, USER_ACTION } from './hooks/useUser';
+import useUser, { IAction, USER_ACTION } from '@/common/hooks/useUser';
 
-import Navigation from './components/Navigation';
-import Loader from './components/Loader';
+import Navigation from '@/common/components/Navigation';
+import Loader from '@/common/components/Loader';
 
 export default function App() {
   return (

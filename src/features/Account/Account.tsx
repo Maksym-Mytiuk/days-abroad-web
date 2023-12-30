@@ -1,17 +1,17 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import userDB from '../../services/db/User';
+import userDB from '@/common/services/db/User';
 
-import { IAction, USER_ACTION } from '../../hooks/useUser';
+import { IAction, USER_ACTION } from '@/common/hooks/useUser';
 
-import Input from '../../components/Form/Input';
-import Select from '../../components/Form/Select';
-import Button from '../../components/Button';
-import Toast, { notify } from '../../components/Toast';
+import Input from '@/common/components/Form/Input';
+import Select from '@/common/components/Form/Select';
+import Button from '@/common/components/Button';
+import Toast, { notify } from '@/common/components/Toast';
 
-import { countries } from '../../utils/countries';
-import { IUser } from '../../interfaces/user';
+import { countries } from '@/common/utils/countries';
+import { IUser } from '@/common/interfaces/user';
 
 import './account.scss';
 
