@@ -1,9 +1,9 @@
 import React from 'react';
-import { useOutletContext } from 'react-router-dom';
+
+import { useAppSelector } from '@/app/store';
+import { selectUser } from '@/features/user/store/userSelectors';
 
 import userDB from '@/common/services/db/User';
-
-import { IAction, USER_ACTION } from '@/common/hooks/useUser';
 
 import Input from '@/common/components/Form/Input';
 import Select from '@/common/components/Form/Select';
@@ -11,12 +11,12 @@ import Button from '@/common/components/Button';
 import Toast, { notify } from '@/common/components/Toast';
 
 import { countries } from '@/common/utils/countries';
-import { IUser } from '@/common/interfaces/user';
 
 import './account.scss';
 
 export default function Account() {
-  const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
+  const user = useAppSelector(selectUser);
+  // const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,8 +26,8 @@ export default function Account() {
   }
 
   function onChangeFormProp(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) {
-    const { value, name } = e.target as HTMLInputElement | HTMLSelectElement;
-    dispatch({ type: USER_ACTION.UPDATE_USER, payload: { [name]: value } });
+    // const { value, name } = e.target as HTMLInputElement | HTMLSelectElement;
+    // dispatch({ type: USER_ACTION.UPDATE_USER, payload: { [name]: value } });
   }
 
   function showToast() {

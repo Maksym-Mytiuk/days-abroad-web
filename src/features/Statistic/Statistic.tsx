@@ -1,4 +1,4 @@
-import World from '@/common/components/World';
+import World from './components/World';
 
 export default function Statistic() {
   return <World />;

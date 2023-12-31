@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
+
+import { useAppSelector } from '@/app/store';
+import { selectTravelHistory } from '@/features/TravelHistory/store/travelHistorySelectors';
 
 import userDB from '@/common/services/db/User';
-import { IUser } from '@/common/interfaces/user';
 import { countries } from '@/common/utils/countries';
 
-import { IAction, USER_ACTION } from '@/common/hooks/useUser';
 import Input from '@/common/components/Form/Input';
 import Select from '@/common/components/Form/Select';
 import Button from '@/common/components/Button';
@@ -15,12 +15,11 @@ import BinIcon from '@/common/components/Icons/BinIcon';
 import './travel-history.scss';
 
 export default function TravelHistory() {
-  const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
-  const trips = user.travelHistory.slice();
+  const travelHistory = useAppSelector(selectTravelHistory);
 
   useEffect(() => {
     let ignore = false;
-    if (!trips.length && !ignore) {
+    if (!travelHistory.length && !ignore) {
       addMoreTrip();
     }
 
@@ -33,18 +32,18 @@ export default function TravelHistory() {
     const target = e.target as HTMLInputElement;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    const updatedTrips = trips.map((item) => {
+    const updatedTrips = travelHistory.map((item) => {
       if (item.id === id) {
         return { ...item, [target.name]: value };
       }
       return item;
     });
 
-    dispatch({ type: USER_ACTION.UPDATE_TRIPS, payload: updatedTrips });
+    // dispatch({ type: USER_ACTION.UPDATE_TRIPS, payload: updatedTrips });
   }
 
   function addMoreTrip() {
-    dispatch({ type: USER_ACTION.ADD_TRIP });
+    // dispatch({ type: USER_ACTION.ADD_TRIP });
   }
 
   function save() {
@@ -57,18 +56,18 @@ export default function TravelHistory() {
   }
 
   function deleteTrip(id: string) {
-    const travelHistory = trips.filter((trip) => trip.id !== id);
+    const trips = travelHistory.filter((trip) => trip.id !== id);
     userDB.save({ travelHistory });
-    dispatch({ type: USER_ACTION.DELETE_TRIP, payload: travelHistory });
+    // dispatch({ type: USER_ACTION.DELETE_TRIP, payload: trips });
     notify.success('Deleted!');
   }
 
   function sortTrips() {
-    return trips.sort((current, next) => Date.parse(current.from) - Date.parse(next.from));
+    return travelHistory.sort((current, next) => Date.parse(current.from) - Date.parse(next.from));
   }
 
   function validateFrom() {
-    return trips.every(({ countryCode, from }) => countryCode.length && from.length);
+    return travelHistory.every(({ countryCode, from }) => countryCode.length && from.length);
   }
 
   return (
@@ -77,7 +76,7 @@ export default function TravelHistory() {
 
       <form onSubmit={(e) => e.preventDefault()}>
         <ul className="form-wrapper travel-list">
-          {trips.map((travel) => (
+          {travelHistory.map((travel) => (
             <li key={travel.id} className="travel-list-item">
               <Select
                 className="country-select"

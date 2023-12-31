@@ -1,17 +1,19 @@
-import { useOutletContext } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
-import { data } from './data';
+import { useAppSelector } from '@/app/store';
+import { selectUser } from '@/features/user/store/userSelectors';
+import { selectTravelHistory } from '@/features/TravelHistory/store/travelHistorySelectors';
 
-import { IUser } from '@/common/interfaces/user';
 import { getDifferenceInDays } from '@/common/utils/date';
+import { data } from './data';
 
 import './world.scss';
 
 export default function World() {
-  const [user] = useOutletContext() as [user: IUser];
+  const user = useAppSelector(selectUser);
+  const travelHistory = useAppSelector(selectTravelHistory);
 
-  const visitedCountriesDays = user.travelHistory.reduce((acc, country) => {
+  const visitedCountriesDays = travelHistory.reduce((acc, country) => {
     const days = getDifferenceInDays(country.from, country.to || new Date().toString());
     acc[country.countryCode] = acc[country.countryCode] ? acc[country.countryCode] + days : days;
     return acc;
