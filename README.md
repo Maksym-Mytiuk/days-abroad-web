@@ -4,10 +4,10 @@ This application allows users to track their travel history, displaying how many
 
 ## Screenshots
 
-![plot](./screenshot1.jpg)
-![plot](./screenshot2.jpg)
-![plot](./screenshot3.jpg)
-![plot](./screenshot4.jpg)
+![plot](./screenshots/screenshot1.jpg)
+![plot](./screenshots/screenshot2.jpg)
+![plot](./screenshots/screenshot3.jpg)
+![plot](./screenshots/screenshot4.jpg)
 
 ## Features
 
