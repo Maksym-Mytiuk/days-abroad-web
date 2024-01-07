@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { userSlice } from '@/features/user';
-import { travelHistorySlice } from '@/features/TravelHistory';
+import { userSlice } from '@/features/user/store/userSlice';
+import { travelHistorySlice } from '@/features/TravelHistory/store/travelHistorySlice';
 
 export const store = configureStore({
   reducer: {

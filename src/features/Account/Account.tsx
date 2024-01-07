@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import { type User, updateUser } from '@/features/user/store/userSlice';
 import { selectUser } from '@/features/user/store/userSelectors';
 
 import userDB from '@/common/services/db/User';
@@ -15,8 +16,8 @@ import { countries } from '@/common/utils/countries';
 import './account.scss';
 
 export default function Account() {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  // const [user, dispatch] = useOutletContext() as [user: IUser, dispatch: React.Dispatch<IAction>];
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,8 +27,10 @@ export default function Account() {
   }
 
   function onChangeFormProp(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) {
-    // const { value, name } = e.target as HTMLInputElement | HTMLSelectElement;
-    // dispatch({ type: USER_ACTION.UPDATE_USER, payload: { [name]: value } });
+    const { value, name } = e.target as HTMLInputElement | HTMLSelectElement;
+    if (name in user) {
+      dispatch(updateUser({ key: name as keyof User, value }));
+    }
   }
 
   function showToast() {

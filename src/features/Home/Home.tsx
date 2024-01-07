@@ -4,8 +4,6 @@ import { useAppSelector } from '@/app/store';
 import { selectUser } from '@/features/user/store/userSelectors';
 import { selectTravelHistory } from '@/features/TravelHistory/store/travelHistorySelectors';
 
-// import { IAction } from '@/common/hooks/useUser';
-// import { IUser } from '@/common/interfaces/user';
 import User from '@/common/utils/user';
 import { countries } from '@/common/utils/countries';
 

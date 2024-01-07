@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 
-import { useAppSelector } from '@/app/store';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import { saveTrips, addTrip, deleteTrip, updatedTrips } from './store/travelHistorySlice';
+
 import { selectTravelHistory } from '@/features/TravelHistory/store/travelHistorySelectors';
 
-import userDB from '@/common/services/db/User';
 import { countries } from '@/common/utils/countries';
 
 import Input from '@/common/components/Form/Input';
@@ -13,8 +14,10 @@ import Toast, { notify } from '@/common/components/Toast';
 import BinIcon from '@/common/components/Icons/BinIcon';
 
 import './travel-history.scss';
+import { ITrip } from '@/common/interfaces/user';
 
 export default function TravelHistory() {
+  const dispatch = useAppDispatch();
   const travelHistory = useAppSelector(selectTravelHistory);
 
   useEffect(() => {
@@ -30,40 +33,27 @@ export default function TravelHistory() {
 
   function handleTripInput(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>, id: string) {
     const target = e.target as HTMLInputElement;
+    const key = target.name as keyof ITrip;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    const updatedTrips = travelHistory.map((item) => {
-      if (item.id === id) {
-        return { ...item, [target.name]: value };
-      }
-      return item;
-    });
-
-    // dispatch({ type: USER_ACTION.UPDATE_TRIPS, payload: updatedTrips });
+    dispatch(updatedTrips({ id, key, value }));
   }
 
   function addMoreTrip() {
-    // dispatch({ type: USER_ACTION.ADD_TRIP });
+    dispatch(addTrip());
   }
 
   function save() {
     const isFormValid = validateFrom();
     if (isFormValid) {
-      const sortedTrips = sortTrips();
-      userDB.save({ travelHistory: sortedTrips });
+      dispatch(saveTrips());
       notify.success('Saved!');
     }
   }
 
-  function deleteTrip(id: string) {
-    const trips = travelHistory.filter((trip) => trip.id !== id);
-    userDB.save({ travelHistory });
-    // dispatch({ type: USER_ACTION.DELETE_TRIP, payload: trips });
+  function deleteTripById(id: string) {
+    dispatch(deleteTrip(id));
     notify.success('Deleted!');
-  }
-
-  function sortTrips() {
-    return travelHistory.sort((current, next) => Date.parse(current.from) - Date.parse(next.from));
   }
 
   function validateFrom() {
@@ -113,7 +103,7 @@ export default function TravelHistory() {
                 onChange={(e) => handleTripInput(e, travel.id)}
               />
 
-              <BinIcon onClick={() => deleteTrip(travel.id)} />
+              <BinIcon onClick={() => deleteTripById(travel.id)} />
             </li>
           ))}
         </ul>
