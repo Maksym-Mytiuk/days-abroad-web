@@ -1,4 +1,4 @@
-import { SECOND, MINUTE, HOUR, DAY, getDifferenceInDays } from '../../utils/date';
+import { SECOND, MINUTE, HOUR, DAY, getDifferenceInDays } from '@/common/utils/date';
 
 describe('Time utilities', () => {
   it('should define constants correctly', () => {
