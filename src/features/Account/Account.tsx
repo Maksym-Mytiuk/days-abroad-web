@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { type User, updateUser } from '@/features/user/store/userSlice';
-import { selectUser } from '@/features/user/store/userSelectors';
+import { type User, updateUser } from '@/features/User/store/userSlice';
+import { selectUser } from '@/features/User/store/userSelectors';
 
 import userDB from '@/common/services/db/User';
 

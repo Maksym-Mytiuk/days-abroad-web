@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store';
-import { saveTrips, addTrip, deleteTrip, updatedTrips } from './store/travelHistorySlice';
+import { saveTrips, addTrip, deleteTrip, updateTrip } from './store/tripsSlice';
 
-import { selectTravelHistory } from '@/features/TravelHistory/store/travelHistorySelectors';
+import { selectTrips, selectTripById } from '@/features/Trips/store/tripsSelectors';
 
 import { countries } from '@/common/utils/countries';
 
@@ -13,16 +13,16 @@ import Button from '@/common/components/Button';
 import Toast, { notify } from '@/common/components/Toast';
 import BinIcon from '@/common/components/Icons/BinIcon';
 
-import './travel-history.scss';
+import './trips.scss';
 import { ITrip } from '@/common/interfaces/user';
 
-export default function TravelHistory() {
+export default function Trips() {
   const dispatch = useAppDispatch();
-  const travelHistory = useAppSelector(selectTravelHistory);
+  const trips = useAppSelector(selectTrips);
 
   useEffect(() => {
     let ignore = false;
-    if (!travelHistory.length && !ignore) {
+    if (!trips.length && !ignore) {
       addMoreTrip();
     }
 
@@ -31,12 +31,19 @@ export default function TravelHistory() {
     };
   }, []);
 
-  function handleTripInput(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>, id: string) {
+  function handleTripInput(e: React.FormEvent<HTMLInputElement | HTMLSelectElement>, id: ITrip['id']) {
     const target = e.target as HTMLInputElement;
     const key = target.name as keyof ITrip;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    dispatch(updatedTrips({ id, key, value }));
+    dispatch(
+      updateTrip({
+        id,
+        changes: {
+          [key]: value,
+        },
+      })
+    );
   }
 
   function addMoreTrip() {
@@ -46,18 +53,18 @@ export default function TravelHistory() {
   function save() {
     const isFormValid = validateFrom();
     if (isFormValid) {
-      dispatch(saveTrips());
+      dispatch(saveTrips(trips));
       notify.success('Saved!');
     }
   }
 
-  function deleteTripById(id: string) {
+  function deleteTripById(id: ITrip['id']) {
     dispatch(deleteTrip(id));
     notify.success('Deleted!');
   }
 
   function validateFrom() {
-    return travelHistory.every(({ countryCode, from }) => countryCode.length && from.length);
+    return trips.every(({ countryCode, from }) => countryCode.length && from.length);
   }
 
   return (
@@ -66,7 +73,7 @@ export default function TravelHistory() {
 
       <form onSubmit={(e) => e.preventDefault()}>
         <ul className="form-wrapper travel-list">
-          {travelHistory.map((travel) => (
+          {trips.map((travel) => (
             <li key={travel.id} className="travel-list-item">
               <Select
                 className="country-select"

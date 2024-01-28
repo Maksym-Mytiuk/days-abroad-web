@@ -1,8 +1,8 @@
 import { Tooltip } from 'react-tooltip';
 
 import { useAppSelector } from '@/app/store';
-import { selectUser } from '@/features/user/store/userSelectors';
-import { selectTravelHistory } from '@/features/TravelHistory/store/travelHistorySelectors';
+import { selectUser } from '@/features/User/store/userSelectors';
+import { selectTrips } from '@/features/Trips/store/tripsSelectors';
 
 import { getDifferenceInDays } from '@/common/utils/date';
 import { data } from './data';
@@ -11,9 +11,9 @@ import './world.scss';
 
 export default function World() {
   const user = useAppSelector(selectUser);
-  const travelHistory = useAppSelector(selectTravelHistory);
+  const trips = useAppSelector(selectTrips);
 
-  const visitedCountriesDays = travelHistory.reduce((acc, country) => {
+  const visitedCountriesDays = trips.reduce((acc, country) => {
     const days = getDifferenceInDays(country.from, country.to || new Date().toString());
     acc[country.countryCode] = acc[country.countryCode] ? acc[country.countryCode] + days : days;
     return acc;
