@@ -4,7 +4,7 @@ import { Outlet, useLoaderData } from 'react-router-dom';
 import { useAppDispatch } from '@/app/store';
 
 import { setUser } from '@/features/user/store/userSlice';
-import { setTravelHistory } from '@/features/TravelHistory/store/travelHistorySlice';
+import { setTrips } from '@/features/Trips/store/tripsSlice';
 
 import { IUser } from '@/common/interfaces/user';
 import Navigation from '@/common/components/Navigation';
@@ -26,7 +26,7 @@ function Content() {
   useEffect(() => {
     const { email, name, secondName, countryCode, born, travelHistory } = userData;
     dispatch(setUser({ email, name, secondName, countryCode, born }));
-    dispatch(setTravelHistory(travelHistory));
+    dispatch(setTrips(travelHistory));
   }, []);
 
   return (

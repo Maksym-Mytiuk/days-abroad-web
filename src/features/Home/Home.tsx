@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectUser } from '@/features/user/store/userSelectors';
-import { selectTravelHistory } from '@/features/TravelHistory/store/travelHistorySelectors';
+import { selectTrips } from '@/features/Trips/store/tripsSelectors';
 
 import User from '@/common/utils/user';
 import { countries } from '@/common/utils/countries';
 
 import homeAwayImage from '@/common/assets/images/home-away.png';
 import atHomeImage from '@/common/assets/images/at-home.png';
-import './home-page.scss';
+import './home.scss';
 
-function App() {
+export default function Home() {
   const user = useAppSelector(selectUser);
-  const travelHistory = useAppSelector(selectTravelHistory);
+  const trips = useAppSelector(selectTrips);
 
   const [traveler, setTraveler] = useState({} as User);
   const { daysFromLastTrip, daysFromLastTravel, isAtHome } = traveler;
@@ -21,7 +21,7 @@ function App() {
   const [currentCountry, setCurrentCountry] = useState('');
 
   useEffect(() => {
-    const traveler = new User({ ...user, travelHistory });
+    const traveler = new User({ ...user, travelHistory: trips });
     setTraveler(traveler);
 
     if (!traveler.isAtHome) {
@@ -51,5 +51,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

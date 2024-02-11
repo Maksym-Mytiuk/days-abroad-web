@@ -1,0 +1,36 @@
+.trip {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 40px;
+
+  > * {
+    flex: 1;
+  }
+
+  select,
+  input {
+    margin-bottom: 0;
+  }
+
+  .short-trip {
+    flex: 0 0 24px;
+
+    label {
+      left: -9px;
+      text-wrap: nowrap;
+    }
+  }
+
+  svg {
+    flex: 0 24px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    fill: #cb72aa;
+    transition: fill 0.2s;
+    &:hover {
+      fill: #000;
+    }
+  }
+}
