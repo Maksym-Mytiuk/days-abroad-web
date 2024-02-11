@@ -2,7 +2,7 @@ import { Tooltip } from 'react-tooltip';
 
 import { useAppSelector } from '@/app/store';
 import { selectUser } from '@/features/user/store/userSelectors';
-import { selectTrips } from '@/features/Trips/store/tripsSelectors';
+import { selectTrips } from '@/features/trips/store/tripsSelectors';
 
 import { getDifferenceInDays } from '@/common/utils/date';
 import { data } from './data';

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectUser } from '@/features/user/store/userSelectors';
-import { selectTrips } from '@/features/Trips/store/tripsSelectors';
+import { selectTrips } from '@/features/trips/store/tripsSelectors';
 
 import User from '@/common/utils/user';
 import { countries } from '@/common/utils/countries';

@@ -4,7 +4,7 @@ import { Outlet, useLoaderData } from 'react-router-dom';
 import { useAppDispatch } from '@/app/store';
 
 import { setUser } from '@/features/user/store/userSlice';
-import { setTrips } from '@/features/Trips/store/tripsSlice';
+import { setTrips } from '@/features/trips/store/tripsSlice';
 
 import { IUser } from '@/common/interfaces/user';
 import Navigation from '@/common/components/Navigation';
