@@ -9,7 +9,7 @@ const Home = React.lazy(() => import('@/features/home'));
 const Account = React.lazy(() => import('@/features/account'));
 const Trips = React.lazy(() => import('@/features/trips'));
 const Statistic = React.lazy(() => import('@/features/statistic'));
-const SignIn = React.lazy(() => import('@/features/signIn'));
+const SignIn = React.lazy(() => import('@/features/SignIn'));
 const NotFound = React.lazy(() => import('@/features/notFound'));
 
 export const ROUTES = {
