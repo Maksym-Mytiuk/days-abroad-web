@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store';
-import { selectUser } from '@/features/User/store/userSelectors';
+import { selectUser } from '@/features/user/store/userSelectors';
 import { selectTrips } from '@/features/Trips/store/tripsSelectors';
 
 import User from '@/common/utils/user';

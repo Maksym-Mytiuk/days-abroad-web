@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { userSlice } from '@/features/User/store/userSlice';
+import { userSlice } from '@/features/user/store/userSlice';
 import { tripsSlice } from '@/features/Trips/store/tripsSlice';
 
 export const store = configureStore({

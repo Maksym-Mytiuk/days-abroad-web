@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
-import SignIn from '@/features/SignIn';
+import SignIn from '@/features/signIn';
 
 beforeEach(() => {
   render(

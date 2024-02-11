@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { saveTrips, addTrip } from './store/tripsSlice';
 
-import { selectTrips, selectTripsId } from '@/features/Trips/store/tripsSelectors';
+import { selectTrips, selectTripsId } from '@/features/trips/store/tripsSelectors';
 
 import Button from '@/common/components/Button';
 import Toast, { notify } from '@/common/components/Toast';

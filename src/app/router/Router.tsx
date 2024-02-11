@@ -5,12 +5,12 @@ import user from '@/common/services/db/User';
 await user.init();
 
 const App = React.lazy(() => import('@/app/App'));
-const Home = React.lazy(() => import('@/features/Home'));
-const Account = React.lazy(() => import('@/features/Account'));
-const Trips = React.lazy(() => import('@/features/Trips'));
+const Home = React.lazy(() => import('@/features/home'));
+const Account = React.lazy(() => import('@/features/account'));
+const Trips = React.lazy(() => import('@/features/trips'));
 const Statistic = React.lazy(() => import('@/features/Statistic'));
-const SignIn = React.lazy(() => import('@/features/SignIn'));
-const NotFound = React.lazy(() => import('@/features/NotFound'));
+const SignIn = React.lazy(() => import('@/features/signIn'));
+const NotFound = React.lazy(() => import('@/features/notFound'));
 
 export const ROUTES = {
   HOME: '/',
