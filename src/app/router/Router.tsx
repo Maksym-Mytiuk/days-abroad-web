@@ -8,7 +8,7 @@ const App = React.lazy(() => import('@/app/App'));
 const Home = React.lazy(() => import('@/features/home'));
 const Account = React.lazy(() => import('@/features/account'));
 const Trips = React.lazy(() => import('@/features/trips'));
-const Statistic = React.lazy(() => import('@/features/Statistic'));
+const Statistic = React.lazy(() => import('@/features/statistic'));
 const SignIn = React.lazy(() => import('@/features/signIn'));
 const NotFound = React.lazy(() => import('@/features/notFound'));
 
