@@ -21,9 +21,11 @@ export const tripsSlice = createSlice({
     saveTrips(_, action: PayloadAction<ITrip[]>) {
       userDB.save({ travelHistory: action.payload });
     },
-    updateTrip: tripsAdapter.updateOne,
-    deleteTrip: tripsAdapter.removeOne,
+    updateTripById: tripsAdapter.updateOne,
+    deleteTripById(state, action: PayloadAction<ITrip['id']>) {
+      tripsAdapter.removeOne(state, action.payload);
+    },
   },
 });
 
-export const { setTrips, addTrip, updateTrip, deleteTrip, saveTrips } = tripsSlice.actions;
+export const { setTrips, addTrip, updateTripById, deleteTripById, saveTrips } = tripsSlice.actions;
