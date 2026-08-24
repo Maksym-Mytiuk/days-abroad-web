@@ -7,8 +7,8 @@ import { selectTrips } from '@/features/Trips/store/tripsSelectors';
 import User from '@/common/utils/user';
 import { countries } from '@/common/utils/countries';
 
-import homeAwayImage from '@/common/assets/images/home-away.png';
-import atHomeImage from '@/common/assets/images/at-home.png';
+import homeAwayImage from '@/common/assets/images/home-away.svg';
+import atHomeImage from '@/common/assets/images/at-home.svg';
 import './home.scss';
 
 export default function Home() {
@@ -31,12 +31,12 @@ export default function Home() {
     <div>
       {isAtHome ? (
         <>
-          <img width={512} height={512} src={atHomeImage} alt="at home" />
+          <img className="home-illustration" src={atHomeImage} alt="" width={400} height={300} />
           <h1>You haven't traveled for {daysFromLastTrip} days</h1>
         </>
       ) : (
         <>
-          <img width={512} height={512} src={homeAwayImage} alt="home away" />
+          <img className="home-illustration" src={homeAwayImage} alt="" width={400} height={300} />
           <h1>You have not been home for {daysFromLastTravel} days</h1>
           {daysFromLastTrip !== daysFromLastTravel && (
             <h2>
