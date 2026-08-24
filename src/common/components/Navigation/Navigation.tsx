@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router';
 import { ROUTES } from '@/app/router';
 
 import userDB from '@/common/services/db/User';

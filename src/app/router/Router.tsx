@@ -1,7 +1,8 @@
 import React from 'react';
-import { createBrowserRouter, redirect } from 'react-router-dom';
+import { createBrowserRouter, redirect } from 'react-router';
 
 import user from '@/common/services/db/User';
+import Loader from '@/common/components/Loader';
 
 const App = React.lazy(() => import('@/app/App'));
 const Home = React.lazy(() => import('@/features/Home'));
@@ -22,6 +23,7 @@ export const ROUTES = {
 export const router = createBrowserRouter([
   {
     element: <App />,
+    hydrateFallbackElement: <Loader />,
     path: ROUTES.HOME,
     loader: async () => {
       await user.init();
@@ -59,6 +61,7 @@ export const router = createBrowserRouter([
   },
   {
     element: <SignIn />,
+    hydrateFallbackElement: <Loader />,
     path: ROUTES.SIGN_IN,
     loader: async () => {
       await user.init();

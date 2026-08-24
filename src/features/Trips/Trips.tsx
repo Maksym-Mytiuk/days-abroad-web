@@ -16,16 +16,12 @@ export default function Trips() {
   const trips = useAppSelector(selectTrips);
   const tripsId = useAppSelector(selectTripsId);
 
+  // Seed an empty row so the form is never blank.
   useEffect(() => {
-    let ignore = false;
-    if (!trips.length && !ignore) {
-      addMoreTrip();
+    if (!trips.length) {
+      dispatch(addTrip());
     }
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
+  }, [trips.length, dispatch]);
 
   function addMoreTrip() {
     dispatch(addTrip());

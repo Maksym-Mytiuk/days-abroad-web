@@ -1,7 +1,7 @@
 import { ROUTES } from '@/app/router/Router';
 
 import './not-found.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 
 export default function NotFound() {
   return (

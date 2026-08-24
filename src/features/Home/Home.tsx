@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 import { useAppSelector } from '@/app/store';
 import { selectUser } from '@/features/user/store/userSelectors';
@@ -15,20 +15,17 @@ export default function Home() {
   const user = useAppSelector(selectUser);
   const trips = useAppSelector(selectTrips);
 
-  const [traveler, setTraveler] = useState({} as User);
+  // Derived rather than stored: User is a pure projection of user + trips.
+  const traveler = useMemo(() => (user.countryCode ? new User({ ...user, travelHistory: trips }) : null), [user, trips]);
+
+  if (!traveler) {
+    return null;
+  }
+
   const { daysFromLastTrip, daysFromLastTravel, isAtHome } = traveler;
-
-  const [currentCountry, setCurrentCountry] = useState('');
-
-  useEffect(() => {
-    const traveler = new User({ ...user, travelHistory: trips });
-    setTraveler(traveler);
-
-    if (!traveler.isAtHome) {
-      const country = countries.find((item) => item.key === traveler.currentLocation.countryCode)?.value || '';
-      setCurrentCountry(country);
-    }
-  }, [user]);
+  const currentCountry = isAtHome
+    ? ''
+    : countries.find((item) => item.key === traveler.currentLocation.countryCode)?.value || '';
 
   return (
     <div>

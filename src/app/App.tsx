@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from 'react';
-import { Outlet, useLoaderData } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router';
 
 import { useAppDispatch } from '@/app/store';
 
@@ -21,13 +21,17 @@ export default function App() {
 
 function Content() {
   const dispatch = useAppDispatch();
-  const userData = useLoaderData() as IUser;
+  const userData = useLoaderData() as IUser | undefined;
 
   useEffect(() => {
+    if (!userData) {
+      return;
+    }
+
     const { email, name, secondName, countryCode, born, travelHistory } = userData;
     dispatch(setUser({ email, name, secondName, countryCode, born }));
     dispatch(setTrips(travelHistory));
-  }, []);
+  }, [userData, dispatch]);
 
   return (
     <Suspense fallback={<Loader />}>
