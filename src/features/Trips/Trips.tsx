@@ -50,8 +50,12 @@ export default function Trips() {
           ))}
         </ul>
 
-        <Button onClick={addMoreTrip}>+ Add more</Button>
-        <Button onClick={save}>Save</Button>
+        <div className="trip-actions">
+          <Button className="outline" onClick={addMoreTrip}>
+            + Add more
+          </Button>
+          <Button onClick={save}>Save</Button>
+        </div>
       </form>
 
       <Toast />

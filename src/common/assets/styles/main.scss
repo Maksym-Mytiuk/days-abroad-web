@@ -1,4 +1,6 @@
-@import "modules/normalize", "modules/input", "modules/form";
+@use "modules/normalize";
+@use "modules/input";
+@use "modules/form";
 
 :root {
   font-family: "Oswald", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
