@@ -11,6 +11,7 @@ class UserDb implements IAuth {
   private db: firestore;
   private authentication: authentication;
   private user: User;
+  private initialized?: Promise<void>;
 
   constructor(DB: typeof firestore, Authentication: typeof authentication) {
     this.db = new DB(USERS_COLLECTION);
@@ -22,7 +23,13 @@ class UserDb implements IAuth {
     return !!this.authentication.auth.currentUser;
   }
 
-  public async init() {
+  // Shared across callers so route loaders can each await it without re-running.
+  public init() {
+    this.initialized ??= this.resolveInitialUser();
+    return this.initialized;
+  }
+
+  private async resolveInitialUser() {
     this.authentication.init();
     this.user = await this.setUser();
   }

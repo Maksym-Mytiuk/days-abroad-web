@@ -1,4 +1,3 @@
-import React from 'react';
 import { ROUTES } from '@/app/router/Router';
 
 import './not-found.scss';

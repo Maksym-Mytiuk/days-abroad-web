@@ -1,4 +1,5 @@
 import { Auth, getAuth, signInWithPopup, signOut, AuthProvider } from 'firebase/auth';
+import { FIREBASE_APP } from './Firestore';
 import logger from '@/common/utils/logger';
 
 export interface IAuth {
@@ -15,7 +16,7 @@ export default class Authentication implements IAuth {
   }
 
   init() {
-    this._auth = getAuth();
+    this._auth = getAuth(FIREBASE_APP);
   }
 
   get auth() {

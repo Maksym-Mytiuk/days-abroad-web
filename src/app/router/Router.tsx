@@ -2,13 +2,12 @@ import React from 'react';
 import { createBrowserRouter, redirect } from 'react-router-dom';
 
 import user from '@/common/services/db/User';
-await user.init();
 
 const App = React.lazy(() => import('@/app/App'));
-const Home = React.lazy(() => import('@/features/home'));
-const Account = React.lazy(() => import('@/features/account'));
-const Trips = React.lazy(() => import('@/features/trips'));
-const Statistic = React.lazy(() => import('@/features/statistic'));
+const Home = React.lazy(() => import('@/features/Home'));
+const Account = React.lazy(() => import('@/features/Account'));
+const Trips = React.lazy(() => import('@/features/Trips'));
+const Statistic = React.lazy(() => import('@/features/Statistic'));
 const SignIn = React.lazy(() => import('@/features/sign-in'));
 const NotFound = React.lazy(() => import('@/features/not-found'));
 
@@ -25,6 +24,8 @@ export const router = createBrowserRouter([
     element: <App />,
     path: ROUTES.HOME,
     loader: async () => {
+      await user.init();
+
       const isUserAuth = user.isUserAuth;
       if (!isUserAuth) {
         return redirect(ROUTES.SIGN_IN);
@@ -59,7 +60,9 @@ export const router = createBrowserRouter([
   {
     element: <SignIn />,
     path: ROUTES.SIGN_IN,
-    loader: () => {
+    loader: async () => {
+      await user.init();
+
       const isUserAuth = user.isUserAuth;
       if (isUserAuth) {
         return redirect(ROUTES.HOME);
