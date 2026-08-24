@@ -10,7 +10,7 @@ import {
 } from 'firebase/firestore';
 import { firebaseConfig } from '@/common/utils/firebaseConfig';
 
-const FIREBASE_APP = initializeApp(firebaseConfig);
+export const FIREBASE_APP = initializeApp(firebaseConfig);
 
 export default class Firestore {
   private firestore;

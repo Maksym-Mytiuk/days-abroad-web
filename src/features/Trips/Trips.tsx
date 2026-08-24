@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { saveTrips, addTrip } from './store/tripsSlice';
 
-import { selectTrips, selectTripsId } from '@/features/trips/store/tripsSelectors';
+import { selectTrips, selectTripsId } from '@/features/Trips/store/tripsSelectors';
 
 import Button from '@/common/components/Button';
 import Toast, { notify } from '@/common/components/Toast';
@@ -16,16 +16,12 @@ export default function Trips() {
   const trips = useAppSelector(selectTrips);
   const tripsId = useAppSelector(selectTripsId);
 
+  // Seed an empty row so the form is never blank.
   useEffect(() => {
-    let ignore = false;
-    if (!trips.length && !ignore) {
-      addMoreTrip();
+    if (!trips.length) {
+      dispatch(addTrip());
     }
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
+  }, [trips.length, dispatch]);
 
   function addMoreTrip() {
     dispatch(addTrip());
@@ -54,8 +50,12 @@ export default function Trips() {
           ))}
         </ul>
 
-        <Button onClick={addMoreTrip}>+ Add more</Button>
-        <Button onClick={save}>Save</Button>
+        <div className="trip-actions">
+          <Button className="outline" onClick={addMoreTrip}>
+            + Add more
+          </Button>
+          <Button onClick={save}>Save</Button>
+        </div>
       </form>
 
       <Toast />

@@ -1,3 +1,14 @@
+.trip-actions {
+  display: flex;
+  gap: 16px;
+  max-width: 768px;
+  margin: 0 auto;
+
+  @media (max-width: 560px) {
+    flex-direction: column;
+  }
+}
+
 .trip-list {
   margin-bottom: 25px;
   padding-bottom: 0;

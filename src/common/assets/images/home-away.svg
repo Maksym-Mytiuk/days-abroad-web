@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="A suitcase and globe beneath a flight path">
+  <defs>
+    <linearGradient id="ha-globe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e4c4d8" />
+      <stop offset="1" stop-color="#cb72aa" />
+    </linearGradient>
+  </defs>
+
+  <!-- flight arc -->
+  <path d="M40 92 Q200 14 360 92" fill="none" stroke="#cb72aa" stroke-width="2.5"
+        stroke-linecap="round" stroke-dasharray="9 11" opacity=".55" />
+  <path d="M349 76l17 16-17 16-4-13-14-3 14-3z" fill="#cb72aa" />
+  <circle cx="40" cy="92" r="4.5" fill="#cb72aa" />
+
+  <!-- globe -->
+  <circle cx="286" cy="176" r="52" fill="url(#ha-globe)" />
+  <g fill="none" stroke="#fff" stroke-width="2" opacity=".8">
+    <ellipse cx="286" cy="176" rx="52" ry="20" />
+    <ellipse cx="286" cy="176" rx="21" ry="52" />
+    <path d="M234 176h104" />
+    <path d="M247 146a70 70 0 0178 0" />
+    <path d="M247 206a70 70 0 0078 0" />
+  </g>
+
+  <!-- suitcase -->
+  <rect x="74" y="150" width="132" height="98" rx="14" fill="#717790" />
+  <rect x="74" y="150" width="132" height="98" rx="14" fill="none" stroke="#5d6377" stroke-width="2" />
+  <path d="M118 150v-14a10 10 0 0110-10h24a10 10 0 0110 10v14" fill="none"
+        stroke="#717790" stroke-width="8" stroke-linecap="round" />
+  <rect x="128" y="150" width="24" height="98" fill="#cb72aa" opacity=".9" />
+  <rect x="86" y="186" width="26" height="7" rx="3.5" fill="#f6f5f7" opacity=".55" />
+  <rect x="86" y="201" width="18" height="7" rx="3.5" fill="#f6f5f7" opacity=".35" />
+  <circle cx="96" cy="258" r="8" fill="#5d6377" />
+  <circle cx="184" cy="258" r="8" fill="#5d6377" />
+
+  <!-- ground -->
+  <path d="M56 272h248" stroke="#e0dfe3" stroke-width="4" stroke-linecap="round" />
+</svg>

@@ -23,11 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them:
-
-```bash
-npm install npm@latest -g
-```
+Node.js 22.22 or newer.
 
 ### Installing
 
@@ -35,15 +31,43 @@ npm install npm@latest -g
 npm install
 ```
 
+### Configuration
+
+The app reads its Firebase credentials from environment variables. Copy the
+template and fill in the values from your Firebase project settings:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Description |
+| --- | --- |
+| `VITE_FIREBASE_API_KEY` | Web API key |
+| `VITE_FIREBASE_AUTH_DOMAIN` | Auth domain, e.g. `your-project.firebaseapp.com` |
+| `VITE_FIREBASE_PROJECT_ID` | Project ID |
+| `VITE_FIREBASE_STORAGE_BUCKET` | Storage bucket |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Messaging sender ID |
+| `VITE_FIREBASE_APP_ID` | App ID |
+
 ### Run project
 
 ```bash
 npm run dev
 ```
 
+### Other commands
+
+```bash
+npm run build     # type-check and bundle for production
+npm run lint      # eslint
+npm run test:ci   # run tests once
+npm run coverage  # tests with coverage
+npm run format    # prettier
+```
+
 ## Build with
 
-React.js
+React 19, Vite, Redux Toolkit, React Router and Firebase.
 
 ## Authors
 

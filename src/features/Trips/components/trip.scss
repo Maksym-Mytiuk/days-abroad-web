@@ -22,15 +22,36 @@
     }
   }
 
-  svg {
-    flex: 0 24px;
-    width: 24px;
-    height: 24px;
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
     cursor: pointer;
-    fill: #cb72aa;
-    transition: fill 0.2s;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+    color: #cb72aa;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
     &:hover {
-      fill: #000;
+      color: #c0392b;
+      background-color: rgba(192, 57, 43, 0.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #c0392b;
+      outline-offset: 2px;
     }
   }
 }

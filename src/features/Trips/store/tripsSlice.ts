@@ -4,7 +4,14 @@ import userDB from '@/common/services/db/User';
 
 import { ITrip, getTrip } from '@/common/interfaces/user';
 
-export const tripsAdapter = createEntityAdapter<ITrip>();
+// Newly added trips have an empty `from` and sort last until a date is picked.
+export const tripsAdapter = createEntityAdapter<ITrip>({
+  sortComparer: (a, b) => {
+    if (!a.from) return 1;
+    if (!b.from) return -1;
+    return a.from.localeCompare(b.from);
+  },
+});
 
 const initialState = tripsAdapter.getInitialState();
 

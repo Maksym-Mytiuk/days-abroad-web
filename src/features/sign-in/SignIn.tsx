@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import user from '@/common/services/db/User';
 import { ROUTES } from '@/app/router';

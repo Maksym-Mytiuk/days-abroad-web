@@ -1,7 +1,13 @@
-import { beforeEach } from 'vitest';
+import { beforeEach, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
+
+// The db singleton initializes Firebase on import, which needs real credentials.
+// This test only asserts on rendered markup, so stub it out.
+vi.mock('@/common/services/db/User', () => ({
+  default: { signin: vi.fn() },
+}));
 
 import SignIn from '@/features/sign-in';
 
