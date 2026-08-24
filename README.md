@@ -65,6 +65,20 @@ npm run coverage  # tests with coverage
 npm run format    # prettier
 ```
 
+## Deployment
+
+Pushing to `main` builds the app and publishes it to
+[maksym-mytiuk.github.io](https://maksym-mytiuk.github.io/) via the `Deploy` workflow,
+which pushes `dist/` to the `master` branch of the `Maksym-Mytiuk.github.io` repository.
+It can also be triggered manually from the Actions tab.
+
+The workflow needs these repository secrets: the six `VITE_FIREBASE_*` values used at
+build time, plus `PAGES_DEPLOY_KEY` — the private half of a write-enabled deploy key on
+the target repository.
+
+For sign-in to work on the deployed site, the Pages domain must be listed under
+Firebase Console → Authentication → Settings → Authorized domains.
+
 ## Build with
 
 React 19, Vite, Redux Toolkit, React Router and Firebase.
