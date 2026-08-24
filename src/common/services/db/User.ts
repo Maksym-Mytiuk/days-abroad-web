@@ -35,22 +35,38 @@ class UserDb implements IAuth {
   }
 
   public save(user: Partial<IUser>) {
+    if (!this.user.uid) {
+      logger.error('Cannot save: no authenticated user');
+      return;
+    }
+
     const ref = this.getUserRef();
     this.db.save(ref, user);
   }
 
   public async signin(provider: AuthProvider) {
     await this.authentication.signin(provider);
+    this.user = this.authentication.auth.currentUser ?? ({} as User);
   }
 
   public async signout() {
     await this.authentication.signout();
+    this.user = {} as User;
+    this.initialized = undefined;
   }
 
   public async getUser(): Promise<IUser | undefined> {
     try {
+      await this.init();
+
+      // init() is memoized, so a stale empty result cannot be retried by calling it
+      // again. Fall back to the live auth state, which is populated by this point.
       if (!this.user.uid) {
-        await this.init();
+        const currentUser = this.authentication.auth.currentUser;
+        if (!currentUser) {
+          return;
+        }
+        this.user = currentUser;
       }
 
       const ref = this.getUserRef();
@@ -69,9 +85,14 @@ class UserDb implements IAuth {
     }
   }
 
+  // Resolves once auth state is known. On a cold load Firebase restores the session
+  // from storage asynchronously, so the listener has to settle rather than trusting
+  // whatever the first callback carries.
   private async setUser(): Promise<User> {
     return new Promise((res) => {
-      this.authentication.auth.onAuthStateChanged((user) => {
+      const unsubscribe = this.authentication.auth.onAuthStateChanged((user) => {
+        unsubscribe();
+
         if (user) {
           res(user);
         } else {
